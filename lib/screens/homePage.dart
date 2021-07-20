@@ -1,14 +1,20 @@
 import 'package:events_app/widgets/customtext.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  //const HomePage({Key? key}) : super(key: key);
+  bool isfeed = false;
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -54,10 +60,10 @@ class _HomePageState extends State<HomePage> {
                           size: 30,
                         )),
                   ),
-                  Padding(padding: EdgeInsets.only(left: width * 0.14)),
+                  Padding(padding: EdgeInsets.only(left: width * 0.1)),
                   Container(
                     height: height * 0.07,
-                    width: width * 0.41,
+                    width: width * 0.5,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(10),
@@ -65,13 +71,16 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        ElevatedButton(
-                            onPressed: () {}, child: Text("Explore")),
-                        ElevatedButton(onPressed: () {}, child: Text("Feed")),
+                        Card(
+                          elevation: widget.isfeed ? 2 : 0,
+                          child: FlatButton(
+                              onPressed: () {}, child: Text("Explore")),
+                        ),
+                        FlatButton(onPressed: () {}, child: Text("Feed")),
                       ],
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: width * 0.13)),
+                  Padding(padding: EdgeInsets.only(left: width * 0.08)),
                   Card(
                     elevation: 2,
                     // decoration: BoxDecoration(
