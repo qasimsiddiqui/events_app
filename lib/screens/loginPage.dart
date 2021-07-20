@@ -1,6 +1,6 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:validators/validators.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,6 +11,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Container(
@@ -43,9 +44,8 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.lock_outline_rounded),
                         suffixIcon: Icon(Icons.visibility_outlined),
                         border: OutlineInputBorder()),
-                    validator: (value) => EmailValidator.validate(value!)
-                        ? null
-                        : "Please enter a valid email",
+                    validator: (value) =>
+                        isEmail(value!) ? null : "Please enter a valid email",
                   ),
                   SizedBox(
                     height: 40,
