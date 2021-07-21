@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(
-                            Icons.filter_1,
+                            Icons.filter_alt,
                             size: 30,
                           )),
                     ),
