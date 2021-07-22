@@ -96,9 +96,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(primary: Colors.black87),
                           onPressed: () {
-                            print(context
+                            context
                                 .read<AuthenticationService>()
-                                .signUp(email: _email, password: _password));
+                                .signUp(email: _email, password: _password);
                           },
                           child: Text('Register')),
                     ),
