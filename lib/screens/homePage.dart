@@ -3,8 +3,12 @@ import 'package:events_app/widgets/event_explore.dart';
 import 'package:events_app/widgets/event_feed.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   //for testing purpose only
   bool isfeed = false;
   List<String> mylist = [
@@ -15,13 +19,7 @@ class HomePage extends StatefulWidget {
     "images/5.jpg",
     "images/6.jpg"
   ];
-  //const HomePage({Key? key}) : super(key: key);
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
@@ -72,28 +70,24 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Card(
-                            color: widget.isfeed
-                                ? Colors.white
-                                : Colors.grey.shade300,
-                            elevation: widget.isfeed ? 2 : 0,
-                            child: FlatButton(
+                            color: isfeed ? Colors.grey.shade300 : Colors.white,
+                            elevation: isfeed ? 0 : 2,
+                            child: TextButton(
                                 autofocus: false,
                                 onPressed: () {
                                   setState(() {
-                                    widget.isfeed = false;
+                                    isfeed = false;
                                   });
                                 },
                                 child: Text("Explore")),
                           ),
                           Card(
-                            elevation: widget.isfeed ? 0 : 2,
-                            color: widget.isfeed
-                                ? Colors.grey.shade300
-                                : Colors.white,
-                            child: FlatButton(
+                            elevation: isfeed ? 2 : 0,
+                            color: isfeed ? Colors.white : Colors.grey.shade300,
+                            child: TextButton(
                                 onPressed: () {
                                   setState(() {
-                                    widget.isfeed = true;
+                                    isfeed = true;
                                   });
                                 },
                                 child: Text("Feed")),
@@ -107,38 +101,40 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(
-                            Icons.filter_1,
+                            Icons.filter_alt_outlined,
                             size: 30,
                           )),
                     ),
                   ],
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Column(
-                    children: widget.mylist
-                        .map((item) => GestureDetector(
-                              onTap: () {},
-                              child: widget.isfeed
-                                  ? EventFeed(
-                                      image: item,
-                                    )
-                                  : EventExp(image: item),
-                            ))
-                        .toList()),
+                child: isfeed
+                    ? Column(
+                        children: mylist
+                            .map((e) => GestureDetector(
+                                  onTap: () {},
+                                  child: EventFeed(image: e),
+                                ))
+                            .toList(),
+                      )
+                    : GridView.count(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        crossAxisSpacing: 5.0,
+                        crossAxisCount: 2,
+                        children: mylist
+                            .map((item) => GestureDetector(
+                                  onTap: () {},
+                                  child: isfeed
+                                      ? EventFeed(
+                                          image: item,
+                                        )
+                                      : EventExp(image: item),
+                                ))
+                            .toList()),
               ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   children: [
-              //     EventExp(image: "images/5.jpg"),
-              //     EventExp(
-              //       image: "images/4.jpg",
-              //     ),
-              //   ],
-              // )
             ],
           ),
         ),

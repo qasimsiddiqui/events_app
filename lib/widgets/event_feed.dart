@@ -1,16 +1,17 @@
 import 'package:events_app/widgets/customtext.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class EventFeed extends StatefulWidget {
   final String image;
-  int likes = 0;
+
   EventFeed({required this.image});
   @override
   _EventFeedState createState() => _EventFeedState();
 }
 
 class _EventFeedState extends State<EventFeed> {
+  int likes = 0;
+
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
@@ -29,31 +30,29 @@ class _EventFeedState extends State<EventFeed> {
             Stack(
               children: [
                 Container(
-                  height: height * 0.4,
+                  height: height * 0.35,
                   width: width * 0.9,
                   child: Card(
                     elevation: 2,
                     child: Container(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                         child: Image.asset(
                           widget.image,
                           fit: BoxFit.fill,
                         ),
                       ),
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    shape:
+                        RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 ),
-
-                // padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
                   height: height * 0.06,
                   width: width * 0.2,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.black),
                   child: Center(
                     child: CustomText(
                       text: "Online",
@@ -63,16 +62,14 @@ class _EventFeedState extends State<EventFeed> {
                     ),
                   ),
                 ),
-
                 Padding(
                   //get screen size and adjust pedding (later)
-                  padding: const EdgeInsets.fromLTRB(305, 185, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(300, 150, 0, 0),
                   child: Container(
                     height: height * 0.12,
                     width: width * 0.15,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(20)), color: Colors.black),
                     child: Center(
                       child: CustomText(
                         text: "July \n 06",
@@ -84,8 +81,9 @@ class _EventFeedState extends State<EventFeed> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 200, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 170, 0, 0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
                         text: "Musical consert",
@@ -108,11 +106,11 @@ class _EventFeedState extends State<EventFeed> {
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
               child: Row(
                 children: [
-                  CircleAvatar(
-                      radius: 25, backgroundImage: AssetImage("images/7.jpg")),
+                  CircleAvatar(radius: 25, backgroundImage: AssetImage("images/7.jpg")),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
                           text: 'Huzaifa Shakeel',
@@ -123,6 +121,7 @@ class _EventFeedState extends State<EventFeed> {
                           text: 'Comptech Head',
                           size: 14,
                           fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade700,
                         ),
                       ],
                     ),
@@ -137,13 +136,13 @@ class _EventFeedState extends State<EventFeed> {
                           IconButton(
                               onPressed: () {
                                 setState(() {
-                                  widget.likes++;
+                                  likes++;
                                 });
                               },
                               icon: Icon(Icons.thumb_up)),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("${widget.likes}"),
+                            child: Text("$likes"),
                           )
                         ],
                       ),
@@ -158,8 +157,6 @@ class _EventFeedState extends State<EventFeed> {
             )
           ],
         ),
-
-        ///finding a way to make this column appera
       ],
     );
   }
