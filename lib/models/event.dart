@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_app/models/user.dart';
 
 class EventModel {
   static const ID = "id";
@@ -12,6 +13,8 @@ class EventModel {
   static const STARTIME = "startime";
   static const ENDTIME = "endtime";
   static const TOTALPARTICIPANTS = "participants";
+  static const LIKEDBY = "likedby";
+  static const INTRESTEDMEMBERS = "intrestedmembers";
 
   String _id = "";
   String _name = "";
@@ -24,6 +27,8 @@ class EventModel {
   String _endtime = "";
   int _participants = 0;
   int _intrestcount = 0;
+  List<UserModel> _intrestedmembers = [];
+  List<UserModel> _likedby = [];
 
 //  getters
   String get id => _id;
@@ -35,6 +40,8 @@ class EventModel {
   String get image => _image;
   String get startime => _startime;
   String get endtime => _endtime;
+  List<UserModel> get likedby => _likedby;
+  List<UserModel> get intrestedmembers => _intrestedmembers;
   int get intrestcount => _intrestcount;
   int get participants => _participants;
 
@@ -48,7 +55,9 @@ class EventModel {
     _intrestcount = snapshot.data()![INTRESTS];
     _startime = snapshot.data()![STARTIME];
     _endtime = snapshot.data()![ENDTIME];
+    _likedby = snapshot.data()![LIKEDBY];
     _participants = snapshot.data()![TOTALPARTICIPANTS];
     _intrestcount = snapshot.data()![INTRESTS];
+    _intrestedmembers = snapshot.data()![INTRESTEDMEMBERS];
   }
 }
