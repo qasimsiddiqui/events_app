@@ -27,7 +27,13 @@ class CustomTextField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            //controller: authProvider.password,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "please fill";
+              }
+            },
+            // onFieldSubmitted: ,
+            controller: editingController,
             decoration: InputDecoration(
               hintText: text,
               border: InputBorder.none,
