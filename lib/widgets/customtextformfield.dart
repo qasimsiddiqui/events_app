@@ -4,35 +4,34 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   TextEditingController editingController;
   String text;
-  CustomTextField({required this.editingController, this.text = ""});
+  TextInputType textype;
+  double height;
+  CustomTextField(
+      {required this.editingController,
+      this.text = "",
+      this.textype = TextInputType.text,
+      this.height = 55});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(30.0, 24, 40, 12),
       child: Container(
-        height: 55,
+        height: height,
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          border: Border.all(color: Colors.grey.shade300),
+          // color: Colors.grey.shade200,
+          border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(8),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey,
-          //     offset: Offset(2, 6),
-          //     blurRadius: 10,
-          //   )
-          //]
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            keyboardType: textype,
             validator: (value) {
               if (value!.isEmpty) {
                 return "please fill";
               }
             },
-            // onFieldSubmitted: ,
             controller: editingController,
             decoration: InputDecoration(
               hintText: text,

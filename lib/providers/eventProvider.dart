@@ -69,4 +69,35 @@ class EventProvider with ChangeNotifier {
     eventaddress.text = "";
     eventdate = "";
   }
+
+  // Future<bool> CreateSocEvent() async {
+  //   _auth = FirebaseAuth.instance;
+  //   try {
+  //     // await _auth
+  //     //     .createUserWithEmailAndPassword(
+  //     //         email: "Huzaifashakeel778@gmail.com", password: "123123123")
+  //     //     .then((value) {
+  //     Map<String, dynamic> values = {
+  //       "name": eventname.text,
+  //       "description": discription.text,
+  //       "location": eventaddress.text,
+  //       "date": eventdate,
+  //       "image": "none",
+  //       "heldby": 'Huzaifa Shakeel',
+  //       "heldbySociety": 'IEEE',
+  //       "startime": startime,
+  //       "endtime": endtime,
+  //       "Intrest_count": 4,
+  //       "participants": participants,
+  //       "isonline": isonline
+  //     };
+  //     print("adding Event");
+  //     _eventServices.createSocietyEVent(values);
+  //     clearControllers();
+  //     return true;
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return false;
+  //   }
+//  }
 }

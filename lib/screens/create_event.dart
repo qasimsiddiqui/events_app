@@ -1,4 +1,5 @@
 import 'package:events_app/providers/eventProvider.dart';
+import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,6 +60,7 @@ class _CreateEventState extends State<CreateEvent> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<EventProvider>(context);
+    final socProvider = Provider.of<SocietyProvider>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -126,7 +128,9 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ],
               ),
-              CustomTextField(editingController: authProvider.eventname),
+              CustomTextField(
+                  text: "Enter Event Name",
+                  editingController: authProvider.eventname),
               Row(
                 children: [
                   Padding(
@@ -231,8 +235,8 @@ class _CreateEventState extends State<CreateEvent> {
                 child: Container(
                   height: 55,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    border: Border.all(color: Colors.grey.shade300),
+                    //color: Colors.grey.shade200,
+                    border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Padding(
@@ -280,8 +284,8 @@ class _CreateEventState extends State<CreateEvent> {
                       height: 55,
                       width: width * 0.35,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        border: Border.all(color: Colors.grey.shade300),
+                        //  color: Colors.grey.shade200,
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Padding(
@@ -308,8 +312,8 @@ class _CreateEventState extends State<CreateEvent> {
                       height: 55,
                       width: width * 0.35,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        border: Border.all(color: Colors.grey.shade300),
+                        // color: Colors.grey.shade200,
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Padding(
@@ -366,7 +370,9 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ],
               ),
-              CustomTextField(editingController: authProvider.eventaddress),
+              CustomTextField(
+                  text: "Enter Event Address",
+                  editingController: authProvider.eventaddress),
               Row(
                 children: [
                   Padding(padding: EdgeInsets.only(left: width * 0.08)),
@@ -378,7 +384,9 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ],
               ),
-              CustomTextField(editingController: authProvider.discription),
+              CustomTextField(
+                  text: "Enter Event Description",
+                  editingController: authProvider.discription),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
                 child: Container(
@@ -392,6 +400,7 @@ class _CreateEventState extends State<CreateEvent> {
                             authProvider.startime = eventStartingTime;
                             authProvider.endtime = eventendingTime;
                             authProvider.isonline = isonlineevent;
+                            // if (!await authProvider.CreateEvent()) {
                             if (!await authProvider.CreateEvent()) {
                               print("Error");
                             } else {

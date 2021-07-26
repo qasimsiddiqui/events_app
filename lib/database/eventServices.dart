@@ -9,6 +9,14 @@ class EventServices {
     _firestore.collection(eventcollection).doc().set(values);
   }
 
+  void createSocietyEVent(Map<String, dynamic> values) {
+    _firestore
+        .collection("Societies")
+        .doc('V6NHIUM6TDkupRX70RQ4')
+        .collection("Events")
+        .add(values);
+  }
+
   // void update_user(Map<String, dynamic> values) {
   //   _firestore.collection(eventcollection).doc(values['id']).update(values);
   // }

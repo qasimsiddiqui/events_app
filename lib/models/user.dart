@@ -9,6 +9,7 @@ class UserModel {
   static const PROFILEIMAGE = "profileimage";
   static const COVERIMAGE = "coverimage";
   static const UNIVERSITY = "university";
+  static const DEPARTMENT = "department";
   static const DATEOFBIRTH = "dateofbirth";
   static const BIO = "bio";
   static const LIKEDSOCIETIES = "likedsocieties";
@@ -22,6 +23,7 @@ class UserModel {
   String _university = "";
   String _dateofbirth = "";
   String _bio = "";
+  String _department = "";
   List<SocietyModel> _likedsocieties = [];
   //String _likedsocieties;
 
@@ -35,10 +37,11 @@ class UserModel {
   String get university => _university;
   String get dateofbirth => _dateofbirth;
   String get bio => _bio;
+  String get department => _department;
   List<SocietyModel> get likedsocieties => _likedsocieties;
 
   UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    _id = snapshot.data()![ID];
+    // _id = snapshot.data()![ID];
     _name = snapshot.data()![NAME];
     _address = snapshot.data()![ADDRESS];
     _instagramID = snapshot.data()![INSTA];
@@ -47,6 +50,7 @@ class UserModel {
     _university = snapshot.data()![UNIVERSITY];
     _dateofbirth = snapshot.data()![DATEOFBIRTH];
     _bio = snapshot.data()![BIO];
-    _likedsocieties = snapshot.data()![LIKEDSOCIETIES];
+    _department = snapshot.data()![DEPARTMENT];
+    //_likedsocieties = snapshot.data()![LIKEDSOCIETIES];
   }
 }
