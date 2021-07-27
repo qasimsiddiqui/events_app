@@ -11,152 +11,75 @@ class EventExp extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: height * 0.3,
-                    width: width * 0.45,
-                    child: Card(
-                      elevation: 2,
-                      child: Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            this.image,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
+          Flexible(
+            flex: 1,
+            child: Stack(
+              children: [
+                Container(
+                  height: width * 0.45,
+                  width: width * 0.45,
+                  child: Card(
+                    elevation: 2,
                     child: Container(
-                      height: height * 0.04,
-                      width: width * 0.15,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          color: Colors.black),
-                      child: Center(
-                        child: CustomText(
-                          text: "Online",
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          size: 15,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          this.image,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(130, 130, 0, 0),
-                    child: Container(
-                      height: height * 0.1,
-                      width: width * 0.12,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Colors.black),
-                      child: Center(
-                        child: CustomText(
-                          text: "July \n 06",
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          size: 15,
-                        ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Container(
+                    height: height * 0.04,
+                    width: width * 0.15,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.black),
+                    child: Center(
+                      child: CustomText(
+                        text: "Online",
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        size: 15,
                       ),
                     ),
-                  )
-                ],
-              ),
-              CustomText(
-                text: "Musical consert",
-                fontWeight: FontWeight.bold,
-              ),
-              CustomText(
-                text: "At UET Taxila ",
-                fontWeight: FontWeight.w500,
-                size: 13,
-              ),
-            ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(130, 90, 0, 0),
+                  child: Container(
+                    height: height * 0.08,
+                    width: width * 0.11,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.black),
+                    child: Center(
+                      child: CustomText(
+                        text: "Jul\n 06",
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        size: 15,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-
-          ///finding a way to make this column appera
-          Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: height * 0.3,
-                    width: width * 0.45,
-                    child: Card(
-                      elevation: 2,
-                      child: Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            this.image,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
-                    child: Container(
-                      height: height * 0.04,
-                      width: width * 0.15,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Colors.black),
-                      child: Center(
-                        child: CustomText(
-                          text: "Online",
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          size: 15,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(130, 130, 0, 0),
-                    child: Container(
-                      height: height * 0.1,
-                      width: width * 0.12,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Colors.black),
-                      child: Center(
-                        child: CustomText(
-                          text: "July \n 06",
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          size: 15,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              CustomText(
-                text: "Musical consert",
-                fontWeight: FontWeight.bold,
-              ),
-              CustomText(
-                text: "At UET ",
-                fontWeight: FontWeight.w500,
-                size: 13,
-              ),
-            ],
+          CustomText(
+            text: "Musical consert",
+            fontWeight: FontWeight.bold,
+          ),
+          CustomText(
+            text: "UET Taxila, CS Department",
+            size: 13,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
           ),
         ],
       ),
