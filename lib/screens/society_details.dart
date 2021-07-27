@@ -3,6 +3,7 @@ import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/member_infoCard.dart';
+import 'package:events_app/widgets/societyEventDetails.dart';
 import 'package:events_app/widgets/society_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,13 +16,30 @@ class SocietyDetails extends StatefulWidget {
 }
 
 class _SocietyDetailsState extends State<SocietyDetails> {
-  bool isinfopage = true;
+  bool isinfopage = false;
+  bool showSocietyEvents = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     final userProvider = Provider.of<UserProvider>(context);
+
+    Widget isInfoOrMember() {
+      if (isinfopage) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: userProvider.users
+              .map((item) => GestureDetector(
+                    onTap: () {},
+                    child: MemberInfo(user: item),
+                  ))
+              .toList(),
+        );
+      } else {
+        return SocietyInfo();
+      }
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -109,34 +127,58 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Card(
-                        color: isinfopage ? Colors.white : Colors.grey.shade300,
-                        elevation: isinfopage ? 2 : 0,
+                        color: showSocietyEvents
+                            ? Colors.white
+                            : isinfopage
+                                ? Colors.white
+                                : Colors.grey.shade300,
+                        elevation: showSocietyEvents
+                            ? 2
+                            : isinfopage
+                                ? 2
+                                : 0,
                         child: FlatButton(
                             autofocus: false,
                             onPressed: () {
                               setState(() {
                                 isinfopage = false;
+                                showSocietyEvents = false;
                               });
                             },
                             child: Text("Info")),
                       ),
                       Card(
-                        elevation: isinfopage ? 0 : 2,
-                        color: isinfopage ? Colors.grey.shade300 : Colors.white,
+                        elevation: showSocietyEvents
+                            ? 2
+                            : isinfopage
+                                ? 0
+                                : 2,
+                        color: showSocietyEvents
+                            ? Colors.white
+                            : isinfopage
+                                ? Colors.grey.shade300
+                                : Colors.white,
                         child: FlatButton(
                             onPressed: () {
                               setState(() {
+                                showSocietyEvents = false;
                                 isinfopage = true;
                               });
                             },
                             child: Text("Members")),
                       ),
                       Card(
-                        elevation: 2,
-                        color: Colors.white,
+                        elevation: showSocietyEvents ? 0 : 2,
+                        color: showSocietyEvents
+                            ? Colors.grey.shade300
+                            : Colors.white,
                         child: FlatButton(
                             onPressed: () {
-                              setState(() {});
+                              setState(() {
+                                ///isinfopage = false;
+                                showSocietyEvents = true;
+                                print(showSocietyEvents);
+                              });
                             },
                             child: Text("Events")),
                       ),
@@ -146,17 +188,8 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                 SizedBox(
                   height: 10,
                 ),
-                //SocietyInfo()
+                showSocietyEvents ? SocietyEventDetails() : isInfoOrMember()
                 //MemberInfo()
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: userProvider.users
-                      .map((item) => GestureDetector(
-                            onTap: () {},
-                            child: MemberInfo(user: item),
-                          ))
-                      .toList(),
-                )
               ],
             ),
           ),

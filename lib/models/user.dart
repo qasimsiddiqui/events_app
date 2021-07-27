@@ -12,6 +12,7 @@ class UserModel {
   static const DEPARTMENT = "department";
   static const DATEOFBIRTH = "dateofbirth";
   static const BIO = "bio";
+  static const PHONENUMBER = "phonenumber";
   static const LIKEDSOCIETIES = "likedsocieties";
 
   String _id = "";
@@ -23,6 +24,7 @@ class UserModel {
   String _university = "";
   String _dateofbirth = "";
   String _bio = "";
+  String _phonenumber = "";
   String _department = "";
   List<SocietyModel> _likedsocieties = [];
   //String _likedsocieties;
@@ -38,6 +40,7 @@ class UserModel {
   String get dateofbirth => _dateofbirth;
   String get bio => _bio;
   String get department => _department;
+  String get phonenumser => _phonenumber;
   List<SocietyModel> get likedsocieties => _likedsocieties;
 
   UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
@@ -50,6 +53,7 @@ class UserModel {
     _university = snapshot.data()![UNIVERSITY];
     _dateofbirth = snapshot.data()![DATEOFBIRTH];
     _bio = snapshot.data()![BIO];
+    _phonenumber = snapshot.data()![PHONENUMBER];
     _department = snapshot.data()![DEPARTMENT];
     //_likedsocieties = snapshot.data()![LIKEDSOCIETIES];
   }

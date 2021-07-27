@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 class EventProvider with ChangeNotifier {
   late FirebaseAuth _auth;
   EventServices _eventServices = new EventServices();
+  List<EventModel> events = [];
 
   //EventModel _eventModel;
   //User _user;
@@ -29,11 +30,16 @@ class EventProvider with ChangeNotifier {
   //User get user => _user;
 
   EventProvider.initialize() {
-    // print("initialized");
+    _loadevents();
+  }
+
+  _loadevents() async {
+    events = await _eventServices.loadallEvents();
+    notifyListeners();
   }
 
   // ignore: non_constant_identifier_names
-  Future<bool> CreateEvent() async {
+  Future<bool> createEvent() async {
     _auth = FirebaseAuth.instance;
     try {
       // await _auth

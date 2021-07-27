@@ -1,6 +1,5 @@
 import 'package:events_app/models/user.dart';
 import 'package:events_app/widgets/customtext.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 

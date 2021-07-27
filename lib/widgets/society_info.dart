@@ -30,9 +30,9 @@ class SocietyInfo extends StatelessWidget {
           //  elevation: 2,
           child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(left: 10)),
+              Padding(padding: EdgeInsets.only(left: 0)),
               CircleAvatar(
-                backgroundImage: AssetImage("images/11.png"),
+                backgroundImage: AssetImage("images/9.jpg"),
                 radius: 30,
               ),
               Column(

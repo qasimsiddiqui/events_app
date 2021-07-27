@@ -12,6 +12,7 @@ class EventExp extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             children: [
@@ -41,7 +42,7 @@ class EventExp extends StatelessWidget {
                       height: height * 0.04,
                       width: width * 0.15,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
                           color: Colors.black),
                       child: Center(
                         child: CustomText(
@@ -54,12 +55,12 @@ class EventExp extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(130, 135, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(130, 130, 0, 0),
                     child: Container(
                       height: height * 0.1,
                       width: width * 0.12,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           color: Colors.black),
                       child: Center(
                         child: CustomText(
@@ -78,7 +79,7 @@ class EventExp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               CustomText(
-                text: "At UET Taxila CS Department",
+                text: "At UET Taxila ",
                 fontWeight: FontWeight.w500,
                 size: 13,
               ),
@@ -127,12 +128,12 @@ class EventExp extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(130, 135, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(130, 130, 0, 0),
                     child: Container(
                       height: height * 0.1,
                       width: width * 0.12,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           color: Colors.black),
                       child: Center(
                         child: CustomText(
@@ -151,7 +152,7 @@ class EventExp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               CustomText(
-                text: "At UET Taxila CS Department",
+                text: "At UET ",
                 fontWeight: FontWeight.w500,
                 size: 13,
               ),

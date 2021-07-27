@@ -401,7 +401,7 @@ class _CreateEventState extends State<CreateEvent> {
                             authProvider.endtime = eventendingTime;
                             authProvider.isonline = isonlineevent;
                             // if (!await authProvider.CreateEvent()) {
-                            if (!await authProvider.CreateEvent()) {
+                            if (!await authProvider.createEvent()) {
                               print("Error");
                             } else {
                               print("added");
