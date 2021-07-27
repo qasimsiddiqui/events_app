@@ -18,7 +18,8 @@ class CustomText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: GoogleFonts.adamina(
+        // TextStyle(
         fontSize: size,
         color: color,
         fontWeight: fontWeight,

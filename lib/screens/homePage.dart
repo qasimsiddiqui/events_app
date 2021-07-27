@@ -1,3 +1,4 @@
+import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/event_explore.dart';
 import 'package:events_app/widgets/event_feed.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(active: 1),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SafeArea(
