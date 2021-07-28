@@ -1,10 +1,12 @@
 import 'package:events_app/database/societyServices.dart';
+import 'package:events_app/models/society.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class SocietyProvider with ChangeNotifier {
-  late FirebaseAuth _auth;
   SocietyServices _societyServices = SocietyServices();
+
+  List<SocietyModel> socities = [];
 
   TextEditingController societyname = TextEditingController();
   TextEditingController societyuniversity = TextEditingController();
@@ -14,11 +16,14 @@ class SocietyProvider with ChangeNotifier {
   DateTime SocietyCreationTime = DateTime.now();
 
   SocietyProvider.initialize() {
-    print("Initialized");
+    _loadSocities();
+  }
+
+  _loadSocities() async {
+    socities = await _societyServices.loadAllSocities();
   }
 
   Future<bool> createSociety() async {
-    _auth = FirebaseAuth.instance;
     try {
       Map<String, dynamic> values = {
         "id": "234",

@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -13,6 +15,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -106,7 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         ClipRect(
                           child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                            filter:
+                                ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                             child: DottedBorder(
                               dashPattern: [6, 6],
                               borderType: BorderType.RRect,
@@ -180,7 +185,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 5, 10, 0),
-              child: Text('University', style: Theme.of(context).textTheme.bodyText1),
+              child: Text('University',
+                  style: Theme.of(context).textTheme.bodyText1),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
@@ -194,6 +200,28 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(
               height: 50,
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          if (!await userProvider.createUser()) {
+                            print("error in adding User");
+                          } else {
+                            print("User Added");
+                          }
+                        },
+                        child: CustomText(
+                          text: "Create",
+                          fontWeight: FontWeight.bold,
+                          size: 24,
+                          color: Colors.white,
+                        ))),
+              ),
             )
           ],
         ),

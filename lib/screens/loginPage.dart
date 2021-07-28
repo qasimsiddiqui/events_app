@@ -29,7 +29,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text('Login',
-                    style: GoogleFonts.merriweather().copyWith(color: Colors.white, fontSize: 30)),
+                    style: GoogleFonts.merriweather()
+                        .copyWith(color: Colors.white, fontSize: 30)),
               ),
             ),
           ),
@@ -41,8 +42,10 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   TextFormField(
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email_outlined), border: OutlineInputBorder()),
-                      validator: (value) => isEmail(value!) ? null : "Please enter a valid email",
+                          prefixIcon: Icon(Icons.email_outlined),
+                          border: OutlineInputBorder()),
+                      validator: (value) =>
+                          isEmail(value!) ? null : "Please enter a valid email",
                       onChanged: (value) => setState(() => _email = value)),
                   TextFormField(
                     decoration: InputDecoration(
@@ -55,7 +58,8 @@ class _LoginPageState extends State<LoginPage> {
                     height: 40,
                     width: double.maxFinite,
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.black87),
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.black87),
                         onPressed: () {
                           context
                               .read<AuthenticationService>()
@@ -68,14 +72,16 @@ class _LoginPageState extends State<LoginPage> {
                       height: 40,
                       width: double.maxFinite,
                       child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.black87),
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.black87),
                           onPressed: () {},
                           child: Text('Login Gmail'))),
                   SizedBox(
                     height: 40,
                     width: double.maxFinite,
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.black87),
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.black87),
                         onPressed: () {},
                         child: Text('Login FaceBook')),
                   ),
@@ -86,7 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                       TextButton(
                           onPressed: () => Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => RegisterPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()),
                               ),
                           child: Text('SignUp'))
                     ],

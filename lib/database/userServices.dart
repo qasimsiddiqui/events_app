@@ -5,6 +5,10 @@ class UserServices {
   String usercollection = "Users";
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  void addUser(Map<String, dynamic> values) async {
+    _firestore.collection(usercollection).add(values);
+  }
+
   Future<List<UserModel>> loadAllusers() async =>
       _firestore.collection(usercollection).get().then((result) {
         List<UserModel> users = [];

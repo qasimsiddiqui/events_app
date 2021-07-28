@@ -25,11 +25,11 @@ class SocietyModel {
   String _university = "";
   String _profileimage = "";
   String _coverimage = "";
-  String _creationdate = "";
+  Timestamp _creationdate = Timestamp(0, 0);
   String _goals = "";
   String _type = "";
   String _department = "";
-  late UserModel _admin;
+  String _admin = "";
   List<EventModel> _heldevents = [];
   List<EventModel> _upcomingevents = [];
   List<UserModel> _members = [];
@@ -42,11 +42,11 @@ class SocietyModel {
   String get university => _university;
   String get profileimage => _profileimage;
   String get coverimage => _coverimage;
-  String get creationdate => _creationdate;
+  Timestamp get creationdate => _creationdate;
   String get goals => _goals;
   String get type => _type;
   String get department => _department;
-  UserModel get admin => _admin;
+  String get admin => _admin;
   List<EventModel> get heldevents => _heldevents;
   List<EventModel> get upcomingevents => _upcomingevents;
   List<UserModel> get members => _members;
@@ -54,17 +54,17 @@ class SocietyModel {
   SocietyModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     _id = snapshot.data()![ID];
     _name = snapshot.data()![NAME];
-    _description = snapshot.data()![DESCRIPTION];
+    //_description = snapshot.data()![DESCRIPTION];
     _university = snapshot.data()![UNIVERSITY];
     _department = snapshot.data()![DEPARTMENT];
-    _profileimage = snapshot.data()![PROFILEIMAGE];
-    _coverimage = snapshot.data()![COVERIMAGE];
+    //_profileimage = snapshot.data()![PROFILEIMAGE];
+    //_coverimage = snapshot.data()![COVERIMAGE];
     _creationdate = snapshot.data()![CREATIONDATE];
     _goals = snapshot.data()![GOALS];
     _type = snapshot.data()![TYPE];
-    _heldevents = snapshot.data()![HELDEVENTS];
-    _upcomingevents = snapshot.data()![UPCOMINGEVENTS];
-    _members = snapshot.data()![MEMBERS];
+    //_heldevents = snapshot.data()![HELDEVENTS];
+    //_upcomingevents = snapshot.data()![UPCOMINGEVENTS];
+    //_members = snapshot.data()![MEMBERS];
     _admin = snapshot.data()![ADMIN];
   }
 }

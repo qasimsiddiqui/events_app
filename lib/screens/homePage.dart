@@ -1,15 +1,14 @@
 import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
+import 'package:events_app/widgets/drawer.dart';
 import 'package:events_app/widgets/event_explore.dart';
 import 'package:events_app/widgets/event_feed.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+  final User user;
   //for testing purpose only
   bool isfeed = false;
   List<String> mylist = [
@@ -21,6 +20,14 @@ class _HomePageState extends State<HomePage> {
     "images/6.jpg"
   ];
 
+  HomePage({required this.user});
+  //const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
@@ -28,25 +35,37 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.user.email);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: CustomText(
+          text: "Events",
+          letterspacing: 3,
+          fontWeight: FontWeight.bold,
+          size: 30,
+        ),
+        centerTitle: true,
+      ),
+      drawer: CustomDrawer(),
       bottomNavigationBar: BottomNavBar(active: 1),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Center(
-                    child: CustomText(
-                  text: "Events",
-                  size: 30,
-                  fontWeight: FontWeight.bold,
-                  letterspacing: 5,
-                )),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 10),
+              //   child: Center(
+              //       child: CustomText(
+              //     text: "Evnts",
+              //     size: 30,
+              //     fontWeight: FontWeight.bold,
+              //     letterspacing: 5,
+              //   )),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -72,24 +91,28 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Card(
-                            color: isfeed ? Colors.grey.shade300 : Colors.white,
-                            elevation: isfeed ? 0 : 2,
-                            child: TextButton(
+                            color: widget.isfeed
+                                ? Colors.white
+                                : Colors.grey.shade300,
+                            elevation: widget.isfeed ? 2 : 0,
+                            child: FlatButton(
                                 autofocus: false,
                                 onPressed: () {
                                   setState(() {
-                                    isfeed = false;
+                                    widget.isfeed = false;
                                   });
                                 },
                                 child: Text("Explore")),
                           ),
                           Card(
-                            elevation: isfeed ? 2 : 0,
-                            color: isfeed ? Colors.white : Colors.grey.shade300,
-                            child: TextButton(
+                            elevation: widget.isfeed ? 0 : 2,
+                            color: widget.isfeed
+                                ? Colors.grey.shade300
+                                : Colors.white,
+                            child: FlatButton(
                                 onPressed: () {
                                   setState(() {
-                                    isfeed = true;
+                                    widget.isfeed = true;
                                   });
                                 },
                                 child: Text("Feed")),
@@ -103,40 +126,38 @@ class _HomePageState extends State<HomePage> {
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(
-                            Icons.filter_alt_outlined,
+                            Icons.filter_alt,
                             size: 30,
                           )),
                     ),
                   ],
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: isfeed
-                    ? Column(
-                        children: mylist
-                            .map((e) => GestureDetector(
-                                  onTap: () {},
-                                  child: EventFeed(image: e),
-                                ))
-                            .toList(),
-                      )
-                    : GridView.count(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        crossAxisSpacing: 5.0,
-                        crossAxisCount: 2,
-                        children: mylist
-                            .map((item) => GestureDetector(
-                                  onTap: () {},
-                                  child: isfeed
-                                      ? EventFeed(
-                                          image: item,
-                                        )
-                                      : EventExp(image: item),
-                                ))
-                            .toList()),
+                child: Column(
+                    children: widget.mylist
+                        .map((item) => GestureDetector(
+                              onTap: () {},
+                              child: widget.isfeed
+                                  ? EventFeed(
+                                      image: item,
+                                    )
+                                  : EventExp(image: item),
+                            ))
+                        .toList()),
               ),
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     EventExp(image: "images/5.jpg"),
+              //     EventExp(
+              //       image: "images/4.jpg",
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ),
