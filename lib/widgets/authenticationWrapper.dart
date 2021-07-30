@@ -14,7 +14,7 @@ class AuthenticationWrapper extends StatelessWidget {
       // BottomNavBar widget adds a Persistent Navigation Bar which
       // stays across all screens. Home screen and other pages are
       // added in this widget.
-      return BottomNavBar(active: 1);
+      return BottomNavBar();
     }
     // if user is not logged in
     return LoginPage();

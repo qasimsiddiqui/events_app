@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BottomNavBar extends StatefulWidget {
-  final int active;
-  BottomNavBar({required this.active});
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -20,7 +18,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       child: PersistentTabView(
         context,
         controller: _controller,
-        screens: [HomePage(), Container(), ProfilePage()],
+        screens: [HomePage(), Container(), Container(), ProfilePage()],
         items: [
           PersistentBottomNavBarItem(
             icon: Icon(CupertinoIcons.home),
@@ -29,13 +27,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
             inactiveColorPrimary: CupertinoColors.systemGrey,
           ),
           PersistentBottomNavBarItem(
-            icon: Icon(CupertinoIcons.settings),
-            title: ("Settings"),
+            icon: Icon(CupertinoIcons.search),
+            title: ("Explore"),
             activeColorPrimary: CupertinoColors.activeBlue,
             inactiveColorPrimary: CupertinoColors.systemGrey,
           ),
           PersistentBottomNavBarItem(
-            icon: Icon(CupertinoIcons.settings),
+            icon: Icon(CupertinoIcons.bell),
+            title: ("Notifications"),
+            activeColorPrimary: CupertinoColors.activeBlue,
+            inactiveColorPrimary: CupertinoColors.systemGrey,
+          ),
+          PersistentBottomNavBarItem(
+            icon: Icon(CupertinoIcons.profile_circled),
             title: ("Profile"),
             activeColorPrimary: CupertinoColors.activeBlue,
             inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -46,13 +50,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
         handleAndroidBackButtonPress: true, // Default is true.
         resizeToAvoidBottomInset:
             true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true, // Default is true.
+        stateManagement: false, // Default is true.
         hideNavigationBarWhenKeyboardShows:
             true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white,
-        ),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
         itemAnimationProperties: ItemAnimationProperties(

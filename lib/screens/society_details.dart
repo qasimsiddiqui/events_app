@@ -1,5 +1,4 @@
 import 'package:events_app/providers/userProvider.dart';
-import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/member_infoCard.dart';
 import 'package:events_app/widgets/societyEventDetails.dart';
@@ -42,10 +41,6 @@ class _SocietyDetailsState extends State<SocietyDetails> {
 
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: BottomNavBar(
-          active: 1,
-        ),
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
