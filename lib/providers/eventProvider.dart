@@ -48,7 +48,7 @@ class EventProvider with ChangeNotifier {
       //         email: "Huzaifashakeel778@gmail.com", password: "123123123")
       //     .then((value) {
       Map<String, dynamic> values = {
-        "id": hostid,
+        "id": id,
         "name": eventname.text,
         "description": discription.text,
         "location": eventaddress.text,

@@ -1,4 +1,5 @@
 import 'package:events_app/helpers/screen_nav.dart';
+import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
@@ -8,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CreateEvent extends StatefulWidget {
-  const CreateEvent({Key? key}) : super(key: key);
+  final UserModel eventcreator;
+
+  const CreateEvent({Key? key, required this.eventcreator}) : super(key: key);
 
   @override
   _CreateEventState createState() => _CreateEventState();
@@ -404,6 +407,8 @@ class _CreateEventState extends State<CreateEvent> {
                             authProvider.startime = eventStartingTime;
                             authProvider.endtime = eventendingTime;
                             authProvider.isonline = isonlineevent;
+                            authProvider.id =
+                                widget.eventcreator.instagramID + "123";
                             // if (!await authProvider.CreateEvent()) {
                             if (!await authProvider.createEvent()) {
                               print("Error");
