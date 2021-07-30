@@ -31,8 +31,6 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(active: 1),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -63,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                     Padding(padding: EdgeInsets.only(left: width * 0.085)),
                     Container(
                       height: height * 0.07,
-                      width: width * 0.5,
+                      width: width * 0.45,
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(10),
@@ -114,6 +112,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(top: 8.0),
                 child: isfeed
                     ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: mylist
                             .map((e) => GestureDetector(
                                   onTap: () {},

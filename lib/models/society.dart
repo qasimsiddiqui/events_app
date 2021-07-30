@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/models/event.dart';
 import 'package:events_app/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SocietyModel {
   static const ID = "id";

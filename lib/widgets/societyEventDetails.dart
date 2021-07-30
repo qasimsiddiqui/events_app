@@ -1,5 +1,4 @@
 import 'package:events_app/providers/eventProvider.dart';
-import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventSummaryCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +47,7 @@ class _SocietyEventDetailsState extends State<SocietyEventDetails> {
                     : showpastEvents
                         ? 2
                         : 0,
-                child: FlatButton(
+                child: TextButton(
                     autofocus: false,
                     onPressed: () {
                       setState(() {
@@ -69,7 +68,7 @@ class _SocietyEventDetailsState extends State<SocietyEventDetails> {
                     : showpastEvents
                         ? Colors.grey.shade300
                         : Colors.white,
-                child: FlatButton(
+                child: TextButton(
                     onPressed: () {
                       setState(() {
                         showpastEvents = true;
@@ -81,7 +80,7 @@ class _SocietyEventDetailsState extends State<SocietyEventDetails> {
               Card(
                 elevation: showtopEvents ? 0 : 2,
                 color: showtopEvents ? Colors.grey.shade300 : Colors.white,
-                child: FlatButton(
+                child: TextButton(
                     onPressed: () {
                       setState(() {
                         showpastEvents = true;

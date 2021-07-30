@@ -77,8 +77,8 @@ class EventSummaryCard extends StatelessWidget {
                         width: width * 0.18,
                         child: ClipRRect(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            child: FlatButton(
-                              color: Colors.black,
+                            child: TextButton(
+                              //color: Colors.black,
                               child: CustomText(
                                   text: "Save",
                                   color: Colors.white,

@@ -11,7 +11,7 @@ class SocietyProvider with ChangeNotifier {
   TextEditingController goals = TextEditingController();
   String type = "";
   String department = "";
-  DateTime SocietyCreationTime = DateTime.now();
+  DateTime societyCreationTime = DateTime.now();
 
   SocietyProvider.initialize() {
     print("Initialized");
@@ -27,7 +27,7 @@ class SocietyProvider with ChangeNotifier {
         "goals": goals.text,
         "type": type,
         "department": department,
-        "creationdate": SocietyCreationTime,
+        "creationdate": societyCreationTime,
         "admin": "Qasim Siddiqui",
       };
       _societyServices.createSociety(values);

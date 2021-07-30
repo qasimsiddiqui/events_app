@@ -22,7 +22,7 @@ class _EventFeedState extends State<EventFeed> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Column(
           // mainAxisAlignment: MainAxisAlignment.start,
@@ -31,7 +31,7 @@ class _EventFeedState extends State<EventFeed> {
               children: [
                 Container(
                   height: height * 0.35,
-                  width: width * 0.9,
+                  width: width * 0.8,
                   child: Card(
                     elevation: 2,
                     child: Container(
@@ -64,7 +64,7 @@ class _EventFeedState extends State<EventFeed> {
                 ),
                 Padding(
                   //get screen size and adjust pedding (later)
-                  padding: const EdgeInsets.fromLTRB(300, 150, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(250, 150, 0, 0),
                   child: Container(
                     height: height * 0.12,
                     width: width * 0.15,
@@ -94,7 +94,7 @@ class _EventFeedState extends State<EventFeed> {
                       CustomText(
                         text: "At UET Taxila CS Department",
                         fontWeight: FontWeight.w500,
-                        size: 18,
+                        size: 15,
                         color: Colors.white,
                       ),
                     ],
@@ -127,7 +127,7 @@ class _EventFeedState extends State<EventFeed> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 90),
+                    padding: const EdgeInsets.only(left: 50),
                     child: Card(
                       color: Colors.grey.shade300,
                       elevation: 2,
