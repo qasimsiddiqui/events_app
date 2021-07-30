@@ -9,7 +9,7 @@ class Loading extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SpinKitSquareCircle(
+          SpinKitFadingCircle(
             color: Colors.black,
             size: 30.0,
           )

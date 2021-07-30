@@ -1,3 +1,5 @@
+import 'package:events_app/models/event.dart';
+import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/loading.dart';
@@ -9,16 +11,19 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class EventDetails extends StatelessWidget {
-  const EventDetails({Key? key}) : super(key: key);
+  final EventModel event;
+  final UserModel eventhost;
+
+  const EventDetails({Key? key, required this.event, required this.eventhost})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final userprovider = Provider.of<UserProvider>(context);
 
     //just for testing
-    final eventprovider = Provider.of<EventProvider>(context);
-    final userprovider = Provider.of<UserProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -31,20 +36,19 @@ class EventDetails extends StatelessWidget {
                     height: height * 0.35,
                     width: width,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      child: Image(
-                        image: AssetImage("images/2.jpg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
+                        child: FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: event.image,
+                          fit: BoxFit.fill,
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 190, 0, 0),
                     child: EventSummaryCard(
-                      event: eventprovider.events[3],
-                      showSaveButton: false,
+                      event: event,
                     ),
                   )
                 ],
@@ -87,7 +91,7 @@ class EventDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              MemberInfo(user: userprovider.users[0]),
+              MemberInfo(user: eventhost),
               Row(
                 children: [
                   Padding(

@@ -16,6 +16,7 @@ class SocietyModel {
   static const UPCOMINGEVENTS = "upcomingevents";
   static const MEMBERS = "members";
   static const ADMIN = "admin";
+  static const ADMINUID = "adminUid";
   static const GOALS = "goals";
   static const TYPE = "type";
 
@@ -30,6 +31,7 @@ class SocietyModel {
   String _type = "";
   String _department = "";
   String _admin = "";
+  String _adminUid = "";
   List<EventModel> _heldevents = [];
   List<EventModel> _upcomingevents = [];
   List<UserModel> _members = [];
@@ -47,6 +49,7 @@ class SocietyModel {
   String get type => _type;
   String get department => _department;
   String get admin => _admin;
+  String get adminUid => _adminUid;
   List<EventModel> get heldevents => _heldevents;
   List<EventModel> get upcomingevents => _upcomingevents;
   List<UserModel> get members => _members;
@@ -54,11 +57,11 @@ class SocietyModel {
   SocietyModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     _id = snapshot.data()![ID];
     _name = snapshot.data()![NAME];
-    //_description = snapshot.data()![DESCRIPTION];
+    _description = snapshot.data()![DESCRIPTION];
     _university = snapshot.data()![UNIVERSITY];
     _department = snapshot.data()![DEPARTMENT];
-    //_profileimage = snapshot.data()![PROFILEIMAGE];
-    //_coverimage = snapshot.data()![COVERIMAGE];
+    _profileimage = snapshot.data()![PROFILEIMAGE];
+    _coverimage = snapshot.data()![COVERIMAGE];
     _creationdate = snapshot.data()![CREATIONDATE];
     _goals = snapshot.data()![GOALS];
     _type = snapshot.data()![TYPE];
@@ -66,5 +69,6 @@ class SocietyModel {
     //_upcomingevents = snapshot.data()![UPCOMINGEVENTS];
     //_members = snapshot.data()![MEMBERS];
     _admin = snapshot.data()![ADMIN];
+    _adminUid = snapshot.data()![ADMINUID];
   }
 }

@@ -1,5 +1,8 @@
 import 'package:events_app/auth/authentication_service.dart';
+import 'package:events_app/helpers/screen_nav.dart';
+import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/registerPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:validators/validators.dart';
@@ -64,6 +67,11 @@ class _LoginPageState extends State<LoginPage> {
                           context
                               .read<AuthenticationService>()
                               .signIn(email: _email, password: _password);
+
+                          User _firebaseUser = context.watch<User>();
+
+                          //   User _firebaseUser = context.watch<User>();
+                          changeScreen(context, HomePage(user: _firebaseUser));
                         },
                         child: Text('Login')),
                   ),

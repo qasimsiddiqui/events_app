@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         buttonColor: Colors.white,
       ),
-      home: ProfilePage(),
+      home: AuthenticationWrapper(),
     );
   }
 }

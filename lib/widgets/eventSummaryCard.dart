@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 
 class EventSummaryCard extends StatelessWidget {
   final EventModel event;
-  final bool showSaveButton;
 
-  const EventSummaryCard({required this.event, this.showSaveButton = true});
+  const EventSummaryCard({required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -75,33 +74,15 @@ class EventSummaryCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                showSaveButton
-                    ? Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 20),
-                        child: Container(
-                            // height: height * 0.1,
-                            width: width * 0.18,
-                            child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                child: FlatButton(
-                                  color: Colors.black,
-                                  child: CustomText(
-                                      text: "Save",
-                                      color: Colors.white,
-                                      size: 14,
-                                      fontWeight: FontWeight.bold),
-                                  onPressed: () {},
-                                ))))
-                    : Divider(
-                        thickness: 0,
-                      )
+                Divider(
+                  thickness: 0,
+                )
               ],
             ),
           ),
         ),
         Divider(
-          thickness: showSaveButton ? 2 : 0,
+          thickness: 2,
         )
       ],
     );

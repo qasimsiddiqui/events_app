@@ -1,4 +1,6 @@
+import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/societyProvider.dart';
+import 'package:events_app/screens/loading.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/society_infoCard.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ShowUserProfile extends StatefulWidget {
-  const ShowUserProfile({Key? key}) : super(key: key);
+  final UserModel userModel;
+
+  const ShowUserProfile({Key? key, required this.userModel}) : super(key: key);
 
   @override
   _ShowUserProfileState createState() => _ShowUserProfileState();
@@ -56,8 +60,19 @@ class _ShowUserProfileState extends State<ShowUserProfile> {
                             backgroundColor: Colors.grey,
                             child: CircleAvatar(
                               radius: 40,
-
-                              backgroundImage: AssetImage("images/7.jpg"),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Stack(
+                                  children: [
+                                    Loading(),
+                                    FadeInImage.memoryNetwork(
+                                        fit: BoxFit.fill,
+                                        height: height * 0.15,
+                                        placeholder: kTransparentImage,
+                                        image: widget.userModel.profileimage),
+                                  ],
+                                ),
+                              ),
                               // radius: 40,
                             ),
                           ),
@@ -65,13 +80,13 @@ class _ShowUserProfileState extends State<ShowUserProfile> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                           child: CustomText(
-                            text: "Huzaifa Shakeel",
+                            text: widget.userModel.name,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         CustomText(
-                          text: "Minding My Own Business",
+                          text: widget.userModel.bio,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           size: 14,
@@ -110,7 +125,9 @@ class _ShowUserProfileState extends State<ShowUserProfile> {
                                   ),
                                   Padding(padding: EdgeInsets.only(left: 15)),
                                   CustomText(
-                                    text: "UET Taxila, CS Department",
+                                    text: widget.userModel.university +
+                                        " , " +
+                                        widget.userModel.department,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                     size: 16,
@@ -133,7 +150,7 @@ class _ShowUserProfileState extends State<ShowUserProfile> {
                                   ),
                                   Padding(padding: EdgeInsets.only(left: 15)),
                                   CustomText(
-                                    text: "0332-4247031",
+                                    text: widget.userModel.phonenumser,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                     size: 16,
@@ -156,7 +173,7 @@ class _ShowUserProfileState extends State<ShowUserProfile> {
                                   ),
                                   Padding(padding: EdgeInsets.only(left: 15)),
                                   CustomText(
-                                    text: "Kot Chutta , Dera Ghazi khan",
+                                    text: widget.userModel.address,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                     size: 16,

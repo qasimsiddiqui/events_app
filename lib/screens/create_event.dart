@@ -1,3 +1,4 @@
+import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
@@ -86,7 +87,9 @@ class _CreateEventState extends State<CreateEvent> {
                           Icons.arrow_back,
                           size: 35,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          //  changeScreenReplacement(context, )
+                        },
                       ),
                     ),
                     CustomText(
@@ -129,8 +132,9 @@ class _CreateEventState extends State<CreateEvent> {
                 ],
               ),
               CustomTextField(
-                  text: "Enter Event Name",
-                  editingController: authProvider.eventname),
+                text: "Enter Event Name",
+                editingController: authProvider.eventname,
+              ),
               Row(
                 children: [
                   Padding(
