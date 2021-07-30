@@ -12,6 +12,7 @@ class UserModel {
   static const DEPARTMENT = "department";
   static const DATEOFBIRTH = "dateofbirth";
   static const BIO = "bio";
+  static const EMAIL = "email";
   static const PHONENUMBER = "phonenumber";
   static const LIKEDSOCIETIES = "likedsocieties";
 
@@ -26,9 +27,23 @@ class UserModel {
   String _bio = "";
   String _phonenumber = "";
   String _department = "";
+  String _email = "";
   List<SocietyModel> _likedsocieties = [];
   //String _likedsocieties;
-
+  UserModel() {
+    _id = "";
+    _name = "";
+    _address = "";
+    _instagramID = "";
+    _profileimage = "";
+    _coverimage = "";
+    _university = "";
+    _dateofbirth = "";
+    _bio = "";
+    _phonenumber = "";
+    _department = "";
+    _email = "";
+  }
 //  getters
   String get id => _id;
   String get name => _name;
@@ -39,12 +54,13 @@ class UserModel {
   String get university => _university;
   String get dateofbirth => _dateofbirth;
   String get bio => _bio;
+  String get email => _email;
   String get department => _department;
   String get phonenumser => _phonenumber;
   List<SocietyModel> get likedsocieties => _likedsocieties;
 
   UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    // _id = snapshot.data()![ID];
+    _id = snapshot.data()![ID];
     _name = snapshot.data()![NAME];
     _address = snapshot.data()![ADDRESS];
     _instagramID = snapshot.data()![INSTA];
@@ -55,6 +71,9 @@ class UserModel {
     _bio = snapshot.data()![BIO];
     _phonenumber = snapshot.data()![PHONENUMBER];
     _department = snapshot.data()![DEPARTMENT];
+
+    _email = snapshot.data()![EMAIL];
+    print("all values assigned\nall values assigned\nall values assigned");
     //_likedsocieties = snapshot.data()![LIKEDSOCIETIES];
   }
 }

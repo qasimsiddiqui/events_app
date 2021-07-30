@@ -46,7 +46,7 @@ class EventSummaryCard extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(left: 10)),
                 Container(
-                  width: width * 0.43,
+                  width: width * 0.66,
                   child: Column(
                     children: [
                       Padding(padding: EdgeInsets.only(top: 5)),
@@ -56,7 +56,11 @@ class EventSummaryCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                       CustomText(
-                        text: event.startime + " to" + event.endtime,
+                        text: event.date +
+                            " , " +
+                            event.startime +
+                            " to " +
+                            event.endtime,
                         size: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.black54,
@@ -70,22 +74,9 @@ class EventSummaryCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 20),
-                    child: Container(
-                        // height: height * 0.1,
-                        width: width * 0.18,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            child: FlatButton(
-                              color: Colors.black,
-                              child: CustomText(
-                                  text: "Save",
-                                  color: Colors.white,
-                                  size: 14,
-                                  fontWeight: FontWeight.bold),
-                              onPressed: () {},
-                            )))),
+                Divider(
+                  thickness: 0,
+                )
               ],
             ),
           ),
