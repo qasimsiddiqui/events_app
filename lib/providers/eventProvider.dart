@@ -1,70 +1,59 @@
-import 'package:events_app/database/eventServices.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/models/event.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:events_app/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventProvider with ChangeNotifier {
-  late FirebaseAuth _auth;
-  EventServices _eventServices = new EventServices();
   List<EventModel> events = [];
 
-  //EventModel _eventModel;
-  //User _user;
-
-  final formkey = GlobalKey<FormState>();
-  TextEditingController eventname = TextEditingController();
-  TextEditingController eventaddress = TextEditingController();
-  TextEditingController discription = TextEditingController();
-  String id = "";
-  String eventdate = "";
-  String image = "";
-  String heldby = "";
-  String startime = "";
-  String endtime = "";
-  String hostid = "";
-  int participants = 0;
-  int intrestcount = 0;
-  bool isonline = false;
-
-  //EventModel get eventModel => _eventModel;
-  //User get user => _user;
+  String eventcollection = 'Events';
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   EventProvider.initialize() {
     _loadevents();
   }
 
   _loadevents() async {
-    events = await _eventServices.loadallEvents();
-    notifyListeners();
+    await _firestore.collection(eventcollection).get().then((result) {
+      for (DocumentSnapshot<Map<String, dynamic>> event in result.docs) {
+        events.add(EventModel.fromSnapshot(event));
+      }
+      notifyListeners();
+    });
   }
 
-  // ignore: non_constant_identifier_names
-  Future<bool> createEvent() async {
-    _auth = FirebaseAuth.instance;
+  Future<bool> createEvent(
+      String id,
+      String eventname,
+      String eventdescription,
+      String eventaddress,
+      String eventdate,
+      String eventimage,
+      String host,
+      String hostsociety,
+      String startime,
+      String endtime,
+      int partcipants,
+      bool isonline) async {
     try {
-      // await _auth
-      //     .createUserWithEmailAndPassword(
-      //         email: "Huzaifashakeel778@gmail.com", password: "123123123")
-      //     .then((value) {
       Map<String, dynamic> values = {
-        "id": id,
-        "name": eventname.text,
-        "description": discription.text,
-        "location": eventaddress.text,
+        "hostid": id,
+        "name": eventname,
+        "description": eventdescription,
+        "location": eventaddress,
         "date": eventdate,
         "image": "none",
-        "heldby": 'Huzaifa Shakeel',
-        "heldbySociety": 'IEEE',
+        "heldby": host,
+        "heldbySociety": hostsociety,
         "startime": startime,
         "endtime": endtime,
         "Intrest_count": 4,
-        "participants": participants,
+        "participants": partcipants,
         "isonline": isonline,
       };
-      print("adding Event");
-      _eventServices.createEvent(values);
-      clearControllers();
+
+      _firestore.collection(eventcollection).doc().set(values);
+      // clearControllers();
       return true;
     } catch (e) {
       print(e.toString());
@@ -72,40 +61,29 @@ class EventProvider with ChangeNotifier {
     }
   }
 
-  void clearControllers() {
-    eventname.text = "";
-    eventaddress.text = "";
-    eventdate = "";
+  Future<bool> createEventMem(UserModel user, String eventid) async {
+    try {
+      Map<String, dynamic> values = {
+        "name": user.name,
+        "address": user.address,
+        "instagramID": user.instagramID,
+        "university": user.university,
+        "department": user.department,
+        "phonenumber": user.phonenumser,
+        "email": user.email,
+        "profileimage": user.profileimage,
+        "id": user.id,
+      };
+      _firestore
+          .collection("Events")
+          .doc(eventid)
+          .collection("User")
+          .add(values);
+      //clearControllers();
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
-
-  // Future<bool> CreateSocEvent() async {
-  //   _auth = FirebaseAuth.instance;
-  //   try {
-  //     // await _auth
-  //     //     .createUserWithEmailAndPassword(
-  //     //         email: "Huzaifashakeel778@gmail.com", password: "123123123")
-  //     //     .then((value) {
-  //     Map<String, dynamic> values = {
-  //       "name": eventname.text,
-  //       "description": discription.text,
-  //       "location": eventaddress.text,
-  //       "date": eventdate,
-  //       "image": "none",
-  //       "heldby": 'Huzaifa Shakeel',
-  //       "heldbySociety": 'IEEE',
-  //       "startime": startime,
-  //       "endtime": endtime,
-  //       "Intrest_count": 4,
-  //       "participants": participants,
-  //       "isonline": isonline
-  //     };
-  //     print("adding Event");
-  //     _eventServices.createSocietyEVent(values);
-  //     clearControllers();
-  //     return true;
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return false;
-  //   }
-//  }
 }

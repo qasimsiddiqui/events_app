@@ -1,12 +1,6 @@
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
-import 'package:events_app/screens/create_event.dart';
-import 'package:events_app/screens/create_society.dart';
-import 'package:events_app/screens/eventDetails.dart';
-import 'package:events_app/screens/profilePage.dart';
-import 'package:events_app/screens/showUserProfile.dart';
-import 'package:events_app/screens/society_details.dart';
 import 'package:events_app/auth/authentication_service.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/loginPage.dart';
@@ -58,7 +52,7 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     User? _firebaseUser = context.watch<User?>();
     if (_firebaseUser != null) {
-      return HomePage(user: _firebaseUser);
+      return HomePage(useremail: _firebaseUser.email.toString());
     }
     return LoginPage();
   }

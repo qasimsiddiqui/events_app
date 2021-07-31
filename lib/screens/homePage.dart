@@ -4,25 +4,23 @@ import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/create_event.dart';
 import 'package:events_app/screens/create_society.dart';
-import 'package:events_app/screens/eventDetails.dart';
 import 'package:events_app/screens/loginPage.dart';
+import 'package:events_app/screens/profilePage.dart';
 import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
-import 'package:events_app/widgets/drawer.dart';
 import 'package:events_app/widgets/event_explore.dart';
 import 'package:events_app/widgets/event_feed.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  final User user;
+  final String useremail;
   //for testing purpose only
   bool isfeed = false;
 
-  HomePage({required this.user});
+  HomePage({Key? key, required this.useremail}) : super(key: key);
+
   //const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -37,17 +35,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.user.email);
+    print(widget.useremail);
     final userProvider = Provider.of<UserProvider>(context);
     final eventprovider = Provider.of<EventProvider>(context);
 
-    userProvider.isuservarified(email: widget.user.email.toString());
-
+    userProvider.isuservarified(email: widget.useremail);
     if (userProvider.isvar) {
-      userProvider.getVarifiedUser(email: widget.user.email.toString());
-    } else {
-      print("user not varified");
+      print("\n\n\nVarified");
     }
+    if (!userProvider.isvar) {
+      print("\n\n\n not varified");
+    }
+    //if (userProvider.isvar) {
+    if (userProvider.isvar) {
+      userProvider.getVarifiedUser(email: widget.useremail);
+    }
+    // } else {
+    //   print("user not varified");
+    // }
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -66,9 +71,6 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              currentAccountPicture: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: userProvider.varifiedUser.profileimage),
               accountEmail: CustomText(
                 text: "Huzaifashakeel778@gmail.com",
                 color: Colors.black,
@@ -87,55 +89,64 @@ class _HomePageState extends State<HomePage> {
                 size: 35,
               ),
               onTap: () => {
-                changeScreen(
-                    context,
-                    CreateSociety(
-                      user: widget.user,
-                      userModel: userProvider.varifiedUser,
-                    ))
+                // changeScreen(
+                //     context,
+                //     CreateSociety(
+                //       userModel: userProvider.varifiedUser,
+                //     ))
               },
             ),
-            ListTile(
-              title: Text(
-                "Create Society",
-                style: TextStyle(fontSize: 20),
-              ),
-              leading: Icon(
-                Icons.food_bank_outlined,
-                size: 35,
-              ),
-              onTap: () => {
-                Navigator.pop(context),
-                changeScreen(
-                    context,
-                    CreateSociety(
-                      user: widget.user,
-                      userModel: userProvider.varifiedUser,
-                    ))
-              },
-            ),
-            ListTile(
-              title: Text(
-                "create Event",
-                style: TextStyle(fontSize: 20),
-              ),
-              leading: Icon(
-                Icons.shopping_cart,
-                size: 35,
-              ),
-              onTap: () => {},
-            ),
-            ListTile(
-              title: Text(
-                "My orders",
-                style: TextStyle(fontSize: 20),
-              ),
-              leading: Icon(
-                Icons.bookmark_border,
-                size: 35,
-              ),
-              onTap: () => {},
-            ),
+            userProvider.isvar
+                ? ListTile(
+                    title: Text(
+                      "Create Society",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    leading: Icon(
+                      Icons.food_bank_outlined,
+                      size: 35,
+                    ),
+                    onTap: () => {
+                      Navigator.pop(context),
+                      changeScreen(
+                          context,
+                          CreateSociety(
+                            userModel: userProvider.varifiedUser,
+                          ))
+                    },
+                  )
+                : Divider(
+                    thickness: 0,
+                  ),
+            userProvider.isvar
+                ? ListTile(
+                    title: Text(
+                      "create Event",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    leading: Icon(
+                      Icons.shopping_cart,
+                      size: 35,
+                    ),
+                    onTap: () => {
+                      changeScreen(context,
+                          CreateEvent(eventcreator: userProvider.varifiedUser))
+                    },
+                  )
+                : ListTile(
+                    title: Text(
+                      "Varify Yourself",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    leading: Icon(
+                      Icons.bookmark_border,
+                      size: 35,
+                    ),
+                    onTap: () => {
+                      changeScreen(
+                          context, ProfilePage(useremail: widget.useremail))
+                    },
+                  ),
             ListTile(
               title: Text(
                 "Settings",
@@ -164,42 +175,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      // Drawer(
-      //   child: SafeArea(
-      //     child: Column(
-      //       children: [
-      //         ElevatedButton(
-      //           child: Text("varify"),
-      //           onPressed: () {},
-      //         ),
-      //         ElevatedButton(
-      //           child: Text("logout"),
-      //           onPressed: () {
-      //             context.read<AuthenticationService>().signOut();
-      //             changeScreenReplacement(context, LoginPage());
-      //           },
-      //         ),
-      //         ElevatedButton(
-      //           child: Text("Create Society"),
-      //           onPressed: () {
-      //             changeScreen(
-      //                 context,
-      //                 CreateSociety(
-      //                   user: widget.user,
-      //                   userModel: userProvider.varifiedUser,
-      //                 ));
-      //           },
-      //         ),
-      //         ElevatedButton(
-      //           child: Text("Create Society"),
-      //           onPressed: () {
-      //             changeScreen(context, CreateEvent());
-      //           },
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       bottomNavigationBar: BottomNavBar(active: 1),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -292,8 +267,12 @@ class _HomePageState extends State<HomePage> {
                               child: widget.isfeed
                                   ? EventFeed(
                                       event: item,
+                                      useremail: widget.useremail,
                                     )
-                                  : EventExp(event: item),
+                                  : EventExp(
+                                      event: item,
+                                      useremail: widget.useremail,
+                                    ),
                             ))
                         .toList()),
               ),

@@ -1,4 +1,6 @@
+import 'package:events_app/models/society.dart';
 import 'package:events_app/models/user.dart';
+import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
@@ -9,7 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SocietyDetails extends StatefulWidget {
-  const SocietyDetails({Key? key}) : super(key: key);
+  final SocietyModel society;
+  final UserModel user;
+
+  const SocietyDetails({Key? key, required this.society, required this.user})
+      : super(key: key);
 
   @override
   _SocietyDetailsState createState() => _SocietyDetailsState();
@@ -24,6 +30,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
     double height = MediaQuery.of(context).size.height;
 
     final userProvider = Provider.of<UserProvider>(context);
+    final societyProvider = Provider.of<SocietyProvider>(context);
 
     Widget isInfoOrMember() {
       if (isinfopage) {
@@ -82,7 +89,10 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                       child: Card(
                         child: IconButton(
                           icon: Icon(Icons.thumb_up),
-                          onPressed: () {},
+                          onPressed: () async {
+                            await societyProvider.createSocietyMem(
+                                widget.user, widget.society.uid);
+                          },
                         ),
                       ),
                     ),
@@ -103,7 +113,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
                   child: CustomText(
-                    text: "Society Name",
+                    text: widget.society.name,
                     fontWeight: FontWeight.w700,
                     size: 22,
                   ),
@@ -111,7 +121,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
                   child: CustomText(
-                    text: "(Educational)",
+                    text: "(${widget.society.type})",
                     fontWeight: FontWeight.w700,
                     size: 18,
                   ),

@@ -1,5 +1,6 @@
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/models/event.dart';
+import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/eventDetails.dart';
 import 'package:events_app/screens/loading.dart';
@@ -10,8 +11,9 @@ import 'package:transparent_image/transparent_image.dart';
 
 class EventFeed extends StatefulWidget {
   final EventModel event;
+  final String useremail;
 
-  EventFeed({required this.event});
+  EventFeed({required this.event, required this.useremail});
   @override
   _EventFeedState createState() => _EventFeedState();
 }
@@ -20,17 +22,12 @@ class _EventFeedState extends State<EventFeed> {
   int likes = 0;
 
   @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print(widget.event);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     final userprovider = Provider.of<UserProvider>(context);
+    final societyProvider = Provider.of<SocietyProvider>(context);
+
     return Column(
       // mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -49,16 +46,25 @@ class _EventFeedState extends State<EventFeed> {
                         Loading(),
                         GestureDetector(
                           onTap: () async {
-                            print("printing uid\n");
-                            print(widget.event.id);
-                            await userprovider.getuserbyuid(
-                                uid: widget.event.id);
+                            print(widget.event.hostuid);
+                            await userprovider.getuserbyid(
+                                id: widget.event.hostuid);
+
+                            await societyProvider.getSocietybyid(
+                                id: widget.event.hostsocietyid);
+                            if (userprovider.isvar) {
+                              await userprovider.getVarifiedUser(
+                                  email: widget.useremail);
+                            }
                             print("going in event");
                             changeScreen(
                                 context,
                                 EventDetails(
                                     event: widget.event,
-                                    eventhost: userprovider.eventhost));
+                                    eventhost: userprovider.eventhost,
+                                    user: userprovider.varifiedUser,
+                                    eventhostSociety:
+                                        societyProvider.eventhostsociety));
                           },
                           child: FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,

@@ -1,49 +1,63 @@
-import 'package:events_app/database/societyServices.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/models/society.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:events_app/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
 class SocietyProvider with ChangeNotifier {
-  late FirebaseAuth _auth;
-  SocietyServices _societyServices = SocietyServices();
+  late SocietyModel eventhostsociety;
+  String societycollection = "Societies";
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   List<SocietyModel> socities = [];
-  final formkey = GlobalKey<FormState>();
-  TextEditingController societyname = TextEditingController();
-  TextEditingController societyuniversity = TextEditingController();
-  TextEditingController goals = TextEditingController();
-  TextEditingController societydescription = TextEditingController();
-  String adminName = "";
-  String adminUID = "";
-  String type = "";
-  String department = "";
-  DateTime SocietyCreationTime = DateTime.now();
 
   SocietyProvider.initialize() {
     _loadSocities();
   }
 
   _loadSocities() async {
-    socities = await _societyServices.loadAllSocities();
+    await _firestore.collection(societycollection).get().then((result) {
+      for (DocumentSnapshot<Map<String, dynamic>> user in result.docs) {
+        print(user.id.toString());
+        socities.add(SocietyModel.fromSnapshot(user));
+      }
+    });
   }
 
-  Future<bool> createSociety() async {
+  Future getSocietybyid({required String id}) async {
+    _firestore.collection(societycollection).doc(id).get().then((doc) {
+      eventhostsociety = SocietyModel.fromSnapshot(doc);
+    });
+  }
+
+  Future<bool> createSociety(
+      String name,
+      String description,
+      String university,
+      String goals,
+      String type,
+      String depratment,
+      String societyCreationTime,
+      String adminname,
+      String adminuid,
+      String profileImage,
+      String coverImage) async {
     try {
       Map<String, dynamic> values = {
         "id": "234",
-        "name": societyname.text,
-        "description": societydescription.text,
-        "university": societyuniversity.text,
-        "goals": goals.text,
+        "name": name,
+        "description": description,
+        "university": university,
+        "goals": goals,
         "type": type,
-        "department": department,
-        "creationdate": SocietyCreationTime,
-        "admin": adminName,
-        "adminUid": adminUID,
+        "department": depratment,
+        "creationdate": societyCreationTime,
+        "admin": adminname,
+        "adminUid": adminuid,
         "profileimage": "",
         "coverimage": ""
       };
-      _societyServices.createSociety(values);
+      _firestore.collection(societycollection).doc().set(values);
+      //clearControllers();
       return true;
     } catch (e) {
       print(e.toString());
@@ -51,10 +65,28 @@ class SocietyProvider with ChangeNotifier {
     }
   }
 
-  clearControllers() {
-    societyname.text = "";
-    societydescription.text = "";
-    societyuniversity.text = "";
-    goals.text = "";
+  Future<bool> createSocietyMem(UserModel user, String socid) async {
+    try {
+      Map<String, dynamic> values = {
+        "name": user.name,
+        "address": user.address,
+        "instagramID": user.instagramID,
+        "university": user.university,
+        "department": user.department,
+        "phonenumber": user.phonenumser,
+        "email": user.email,
+        "profileimage": user.profileimage,
+        "id": user.id,
+      };
+      await _firestore
+          .collection(societycollection)
+          .doc(socid)
+          .collection("User")
+          .add(values);
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
 }

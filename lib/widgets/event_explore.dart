@@ -1,5 +1,6 @@
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/models/event.dart';
+import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/eventDetails.dart';
 import 'package:events_app/screens/loading.dart';
@@ -12,13 +13,15 @@ import 'package:transparent_image/transparent_image.dart';
 
 class EventExp extends StatelessWidget {
   final EventModel event;
-  const EventExp({required this.event});
+  final String useremail;
+  const EventExp({required this.event, required this.useremail});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final userprovider = Provider.of<UserProvider>(context);
+    final societyProvider = Provider.of<SocietyProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -58,7 +61,8 @@ class EventExp extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                await userprovider.getuserbyuid(uid: event.id);
+                                await userprovider.getuserbyid(
+                                    id: event.hostuid);
                                 print(userprovider.eventhost);
                                 changeScreen(
                                     context,
@@ -106,15 +110,26 @@ class EventExp extends StatelessWidget {
                           Loading(),
                           GestureDetector(
                             onTap: () async {
-                              print("printing uid\n");
-                              print(event.id);
-                              await userprovider.getuserbyuid(uid: event.id);
-                              print("going in event");
+                              await societyProvider.getSocietybyid(
+                                  id: event.hostsocietyid);
+                              print("Printing Event hostid\n\n\n");
+                              print(event.hostsocietyid);
+                              await userprovider.getuserbyid(id: event.hostid);
+
+                              if (userprovider.isvar) {
+                                await userprovider.getVarifiedUser(
+                                    email: useremail);
+                              }
+
                               changeScreen(
                                   context,
                                   EventDetails(
-                                      event: event,
-                                      eventhost: userprovider.eventhost));
+                                    event: event,
+                                    eventhost: userprovider.eventhost,
+                                    user: userprovider.varifiedUser,
+                                    eventhostSociety:
+                                        societyProvider.eventhostsociety,
+                                  ));
                             },
                             child: FadeInImage.memoryNetwork(
                               placeholder: kTransparentImage,
