@@ -1,5 +1,4 @@
 import 'package:events_app/widgets/customtext.dart';
-import 'package:events_app/widgets/event_explore.dart';
 import 'package:events_app/widgets/event_feed.dart';
 import 'package:flutter/material.dart';
 
