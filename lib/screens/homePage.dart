@@ -1,4 +1,3 @@
-import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/event_explore.dart';
 import 'package:events_app/widgets/event_feed.dart';
@@ -28,116 +27,33 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Center(
-                    child: CustomText(
-                  text: "Events",
-                  size: 30,
-                  fontWeight: FontWeight.bold,
-                  letterspacing: 5,
-                )),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: CustomText(
+                text: "Events",
+                size: 20,
+                fontWeight: FontWeight.bold,
+                letterspacing: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Card(
-                      elevation: 2,
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.search,
-                            size: 30,
-                          )),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: width * 0.085)),
-                    Container(
-                      height: height * 0.07,
-                      width: width * 0.45,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Card(
-                            color: isfeed ? Colors.grey.shade300 : Colors.white,
-                            elevation: isfeed ? 0 : 2,
-                            child: TextButton(
-                                autofocus: false,
-                                onPressed: () {
-                                  setState(() {
-                                    isfeed = false;
-                                  });
-                                },
-                                child: Text("Explore")),
-                          ),
-                          Card(
-                            elevation: isfeed ? 2 : 0,
-                            color: isfeed ? Colors.white : Colors.grey.shade300,
-                            child: TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isfeed = true;
-                                  });
-                                },
-                                child: Text("Feed")),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: width * 0.1)),
-                    Card(
-                      elevation: 2,
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.filter_alt_outlined,
-                            size: 30,
-                          )),
-                    ),
-                  ],
-                ),
+            ),
+            Divider(),
+            Expanded(
+              child: ListView(
+                children: mylist
+                    .map((e) => GestureDetector(
+                          onTap: () {},
+                          child: EventFeed(image: e),
+                        ))
+                    .toList(),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: isfeed
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: mylist
-                            .map((e) => GestureDetector(
-                                  onTap: () {},
-                                  child: EventFeed(image: e),
-                                ))
-                            .toList(),
-                      )
-                    : GridView.count(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        crossAxisSpacing: 5.0,
-                        crossAxisCount: 2,
-                        children: mylist
-                            .map((item) => GestureDetector(
-                                  onTap: () {},
-                                  child: isfeed
-                                      ? EventFeed(
-                                          image: item,
-                                        )
-                                      : EventExp(image: item),
-                                ))
-                            .toList()),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

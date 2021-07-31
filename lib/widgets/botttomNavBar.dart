@@ -1,3 +1,4 @@
+import 'package:events_app/screens/explorePage.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/profilePage.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       child: PersistentTabView(
         context,
         controller: _controller,
-        screens: [HomePage(), Container(), Container(), ProfilePage()],
+        screens: [HomePage(), ExplorePage(), Container(), Container(), ProfilePage()],
         items: [
           PersistentBottomNavBarItem(
             icon: Icon(CupertinoIcons.home),
@@ -35,6 +36,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
           PersistentBottomNavBarItem(
             icon: Icon(CupertinoIcons.bell),
             title: ("Notifications"),
+            activeColorPrimary: CupertinoColors.activeBlue,
+            inactiveColorPrimary: CupertinoColors.systemGrey,
+          ),
+          PersistentBottomNavBarItem(
+            icon: Icon(CupertinoIcons.chat_bubble_2),
+            title: ("Chat"),
             activeColorPrimary: CupertinoColors.activeBlue,
             inactiveColorPrimary: CupertinoColors.systemGrey,
           ),
