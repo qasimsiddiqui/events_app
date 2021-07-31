@@ -1,4 +1,3 @@
-import 'package:events_app/widgets/customtext.dart';
 import 'package:flutter/material.dart';
 
 class EventExploreWidget extends StatelessWidget {
@@ -7,7 +6,6 @@ class EventExploreWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     return Material(
       borderRadius: BorderRadius.circular(10),
@@ -48,62 +46,6 @@ class EventExploreWidget extends StatelessWidget {
                 "UET Taxila, CS Department",
               ),
             )
-            // child: Stack(
-            //   children: [
-            //     Container(
-            //       child: ClipRRect(
-            //         borderRadius: BorderRadius.circular(10),
-            //         child: Image.asset(
-            //           this.image,
-            //           fit: BoxFit.fill,
-            //         ),
-            //       ),
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       child: Chip(
-            //         label: Text(
-            //           'Online',
-            //           style: TextStyle(color: Colors.white),
-            //         ),
-            //         backgroundColor: Colors.black87,
-            //         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //         visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-            //       ),
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.fromLTRB(130, 90, 0, 0),
-            //       child: Container(
-            //         height: _height * 0.08,
-            //         width: _width * 0.11,
-            //         decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.black),
-            //         child: Center(
-            //           child: CustomText(
-            //             text: "Jul\n 06",
-            //             color: Colors.white,
-            //             fontWeight: FontWeight.bold,
-            //             size: 15,
-            //           ),
-            //         ),
-            //       ),
-            //     )
-
-            // ],
-            // ),
-            //),
-            // ,
-            // CustomText(
-            //   text: "Musical consert",
-            //   fontWeight: FontWeight.bold,
-            //   size: 10,
-            // ),
-            // CustomText(
-            //   text: "UET Taxila, CS Department",
-            //   size: 10,
-            //   fontWeight: FontWeight.w600,
-            //   color: Colors.grey,
-            // ),
           ],
         ),
       ),
