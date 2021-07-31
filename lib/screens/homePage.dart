@@ -1,5 +1,5 @@
 import 'package:events_app/widgets/customtext.dart';
-import 'package:events_app/widgets/event_feed.dart';
+import 'package:events_app/widgets/eventFeed_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,8 +26,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: Column(
