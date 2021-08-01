@@ -73,6 +73,9 @@ class EventProvider with ChangeNotifier {
         "email": user.email,
         "profileimage": user.profileimage,
         "id": user.id,
+        "dateofbirth": "10-12-1998",
+        "bio": user.bio,
+        "coverimage": "",
       };
       _firestore
           .collection("Events")

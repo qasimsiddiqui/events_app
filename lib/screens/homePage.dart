@@ -6,10 +6,8 @@ import 'package:events_app/screens/create_event.dart';
 import 'package:events_app/screens/create_society.dart';
 import 'package:events_app/screens/loginPage.dart';
 import 'package:events_app/screens/profilePage.dart';
-import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
-import 'package:events_app/widgets/event_explore.dart';
-import 'package:events_app/widgets/event_feed.dart';
+import 'package:events_app/widgets/eventFeed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,16 +55,17 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: CustomText(
-          text: "Events",
-          letterspacing: 3,
-          fontWeight: FontWeight.bold,
-          size: 30,
-        ),
-        centerTitle: true,
-      ),
+      //appBar:
+      // AppBar(
+      //   elevation: 0,
+      //   title: CustomText(
+      //     text: "Events",
+      //     letterspacing: 3,
+      //     fontWeight: FontWeight.bold,
+      //     size: 30,
+      //   ),
+      //   centerTitle: true,
+      // ),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -175,119 +174,34 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(active: 1),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 10),
-              //   child: Center(
-              //       child: CustomText(
-              //     text: "Evnts",
-              //     size: 30,
-              //     fontWeight: FontWeight.bold,
-              //     letterspacing: 5,
-              //   )),
-              // ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Card(
-                      elevation: 2,
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.search,
-                            size: 30,
-                          )),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: width * 0.085)),
-                    Container(
-                      height: height * 0.07,
-                      width: width * 0.5,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Card(
-                            color: widget.isfeed
-                                ? Colors.white
-                                : Colors.grey.shade300,
-                            elevation: widget.isfeed ? 2 : 0,
-                            child: FlatButton(
-                                autofocus: false,
-                                onPressed: () {
-                                  setState(() {
-                                    widget.isfeed = false;
-                                  });
-                                },
-                                child: Text("Explore")),
-                          ),
-                          Card(
-                            elevation: widget.isfeed ? 0 : 2,
-                            color: widget.isfeed
-                                ? Colors.grey.shade300
-                                : Colors.white,
-                            child: FlatButton(
-                                onPressed: () {
-                                  setState(() {
-                                    widget.isfeed = true;
-                                  });
-                                },
-                                child: Text("Feed")),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: width * 0.1)),
-                    Card(
-                      elevation: 2,
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.filter_alt,
-                            size: 30,
-                          )),
-                    ),
-                  ],
-                ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: CustomText(
+                text: "Events",
+                size: 20,
+                fontWeight: FontWeight.bold,
+                letterspacing: 5,
               ),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Column(
-                    children: eventprovider.events
-                        .map((item) => GestureDetector(
-                              child: widget.isfeed
-                                  ? EventFeed(
-                                      event: item,
-                                      useremail: widget.useremail,
-                                    )
-                                  : EventExp(
-                                      event: item,
-                                      useremail: widget.useremail,
-                                    ),
-                            ))
-                        .toList()),
+            ),
+            Divider(),
+            Expanded(
+              child: ListView(
+                children: eventprovider.events
+                    .map((e) => GestureDetector(
+                          onTap: () {},
+                          child: EventFeed(
+                            event: e,
+                            useremail: widget.useremail,
+                          ),
+                        ))
+                    .toList(),
               ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   children: [
-              //     EventExp(image: "images/5.jpg"),
-              //     EventExp(
-              //       image: "images/4.jpg",
-              //     ),
-              //   ],
-              // )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

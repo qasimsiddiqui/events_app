@@ -16,7 +16,7 @@ class UserProvider with ChangeNotifier {
   }
 
   _loadusers() async {
-    _firestore.collection(usercollection).get().then((result) {
+    await _firestore.collection(usercollection).get().then((result) {
       for (DocumentSnapshot<Map<String, dynamic>> user in result.docs) {
         users.add(UserModel.fromSnapshot(user));
       }
@@ -25,7 +25,7 @@ class UserProvider with ChangeNotifier {
   }
 
   getVarifiedUser({required String email}) async {
-    _firestore
+    await _firestore
         .collection(usercollection)
         .where("email", isEqualTo: email)
         .get()

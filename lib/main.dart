@@ -4,6 +4,7 @@ import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/auth/authentication_service.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/loginPage.dart';
+import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     User? _firebaseUser = context.watch<User?>();
     if (_firebaseUser != null) {
-      return HomePage(useremail: _firebaseUser.email.toString());
+      return BottomNavBar(useremail: _firebaseUser.email.toString());
     }
     return LoginPage();
   }

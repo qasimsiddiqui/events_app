@@ -24,7 +24,7 @@ class SocietyProvider with ChangeNotifier {
   }
 
   Future getSocietybyid({required String id}) async {
-    _firestore.collection(societycollection).doc(id).get().then((doc) {
+    await _firestore.collection(societycollection).doc(id).get().then((doc) {
       eventhostsociety = SocietyModel.fromSnapshot(doc);
     });
   }
@@ -77,6 +77,9 @@ class SocietyProvider with ChangeNotifier {
         "email": user.email,
         "profileimage": user.profileimage,
         "id": user.id,
+        "dateofbirth": "10-12-1998",
+        "bio": user.bio,
+        "coverimage": "",
       };
       await _firestore
           .collection(societycollection)
