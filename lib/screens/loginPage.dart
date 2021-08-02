@@ -1,5 +1,8 @@
 import 'package:events_app/auth/authentication_service.dart';
+import 'package:events_app/helpers/screen_nav.dart';
+import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/registerPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:validators/validators.dart';
@@ -29,7 +32,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text('Login',
-                    style: GoogleFonts.merriweather().copyWith(color: Colors.white, fontSize: 30)),
+                    style: GoogleFonts.merriweather()
+                        .copyWith(color: Colors.white, fontSize: 30)),
               ),
             ),
           ),
@@ -41,8 +45,10 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   TextFormField(
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email_outlined), border: OutlineInputBorder()),
-                      validator: (value) => isEmail(value!) ? null : "Please enter a valid email",
+                          prefixIcon: Icon(Icons.email_outlined),
+                          border: OutlineInputBorder()),
+                      validator: (value) =>
+                          isEmail(value!) ? null : "Please enter a valid email",
                       onChanged: (value) => setState(() => _email = value)),
                   TextFormField(
                     decoration: InputDecoration(
@@ -55,11 +61,17 @@ class _LoginPageState extends State<LoginPage> {
                     height: 40,
                     width: double.maxFinite,
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.black87),
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.black87),
                         onPressed: () {
                           context
                               .read<AuthenticationService>()
                               .signIn(email: _email, password: _password);
+
+                          User _firebaseUser = context.watch<User>();
+
+                          //   User _firebaseUser = context.watch<User>();
+                          changeScreen(context, HomePage(user: _firebaseUser));
                         },
                         child: Text('Login')),
                   ),
@@ -68,14 +80,16 @@ class _LoginPageState extends State<LoginPage> {
                       height: 40,
                       width: double.maxFinite,
                       child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.black87),
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.black87),
                           onPressed: () {},
                           child: Text('Login Gmail'))),
                   SizedBox(
                     height: 40,
                     width: double.maxFinite,
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.black87),
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.black87),
                         onPressed: () {},
                         child: Text('Login FaceBook')),
                   ),
@@ -86,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                       TextButton(
                           onPressed: () => Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => RegisterPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()),
                               ),
                           child: Text('SignUp'))
                     ],

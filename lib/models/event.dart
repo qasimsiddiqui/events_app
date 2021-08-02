@@ -9,6 +9,7 @@ class EventModel {
   static const DATE = "date";
   static const IMAGE = "image";
   static const HELDBY = "heldby";
+  static const HOSTUID = "hostuid";
   static const HELDBYSOCIETY = "heldbySociety";
   static const INTRESTS = "Intrest_count";
   static const STARTIME = "startime";
@@ -29,6 +30,7 @@ class EventModel {
   String _heldbySociety = "";
   String _startime = "";
   String _endtime = "";
+  String _hostuid = "";
   int _participants = 0;
   int _intrestcount = 0;
   bool _isonline = false;
@@ -46,6 +48,7 @@ class EventModel {
   String get image => _image;
   String get startime => _startime;
   String get endtime => _endtime;
+  String get hostuid => _hostuid;
   bool get isonline => _isonline;
   List<UserModel> get likedby => _likedby;
   List<UserModel> get intrestedmembers => _intrestedmembers;
@@ -53,18 +56,19 @@ class EventModel {
   int get participants => _participants;
 
   EventModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    //_id = snapshot.data()![ID];
+    _id = snapshot.data()![ID];
     _description = snapshot.data()![DESCRIPTION];
     _name = snapshot.data()![NAME];
     _location = snapshot.data()![LOCATION];
     _date = snapshot.data()![DATE];
-    _heldby = snapshot.data()![DATE];
+    _heldby = snapshot.data()![HELDBY];
     _heldbySociety = snapshot.data()![HELDBYSOCIETY];
     _intrestcount = snapshot.data()![INTRESTS];
     _startime = snapshot.data()![STARTIME];
     _endtime = snapshot.data()![ENDTIME];
     _image = snapshot.data()![IMAGE];
     _isonline = snapshot.data()![ISONLINE];
+    _hostuid = snapshot.data()![HOSTUID];
     //_likedby = snapshot.data()![LIKEDBY];
     _participants = snapshot.data()![TOTALPARTICIPANTS];
     //_intrestcount = snapshot.data()![INTRESTS];

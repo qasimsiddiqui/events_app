@@ -1,4 +1,6 @@
 import 'package:events_app/auth/authentication_service.dart';
+import 'package:events_app/helpers/screen_nav.dart';
+import 'package:events_app/screens/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:validators/validators.dart';
@@ -33,8 +35,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Text('Register',
-                        style:
-                            GoogleFonts.merriweather().copyWith(color: Colors.white, fontSize: 30)),
+                        style: GoogleFonts.merriweather()
+                            .copyWith(color: Colors.white, fontSize: 30)),
                   ),
                 ),
               ),
@@ -73,7 +75,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
                             prefixIcon: Icon(Icons.email_outlined),
                             border: OutlineInputBorder()),
-                        validator: (value) => isEmail(value!) ? null : "Please enter a valid email",
+                        validator: (value) => isEmail(value!)
+                            ? null
+                            : "Please enter a valid email",
                         onChanged: (value) => setState(() => _email = value),
                       ),
                     ),
@@ -94,11 +98,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 50,
                       width: double.maxFinite,
                       child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.black87),
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.black87),
                           onPressed: () {
                             context
                                 .read<AuthenticationService>()
                                 .signUp(email: _email, password: _password);
+                            changeScreenReplacement(context, LoginPage());
                           },
                           child: Text('Register')),
                     ),

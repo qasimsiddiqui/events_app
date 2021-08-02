@@ -21,6 +21,7 @@ class EventProvider with ChangeNotifier {
   String heldby = "";
   String startime = "";
   String endtime = "";
+  String hostid = "";
   int participants = 0;
   int intrestcount = 0;
   bool isonline = false;
@@ -45,6 +46,7 @@ class EventProvider with ChangeNotifier {
       //         email: "Huzaifashakeel778@gmail.com", password: "123123123")
       //     .then((value) {
       Map<String, dynamic> values = {
+        "id": id,
         "name": eventname.text,
         "description": discription.text,
         "location": eventaddress.text,
@@ -56,7 +58,7 @@ class EventProvider with ChangeNotifier {
         "endtime": endtime,
         "Intrest_count": 4,
         "participants": participants,
-        "isonline": isonline
+        "isonline": isonline,
       };
       print("adding Event");
       _eventServices.createEvent(values);
