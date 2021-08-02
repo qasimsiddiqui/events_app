@@ -56,11 +56,7 @@ class EventSummaryCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                       CustomText(
-                        text: event.date +
-                            " , " +
-                            event.startime +
-                            " to " +
-                            event.endtime,
+                        text: event.date + " , " + event.startime + " to " + event.endtime,
                         size: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.black54,

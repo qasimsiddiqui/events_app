@@ -1,7 +1,6 @@
 import 'package:events_app/database/eventServices.dart';
 import 'package:events_app/models/event.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventProvider with ChangeNotifier {
@@ -39,7 +38,6 @@ class EventProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // ignore: non_constant_identifier_names
   Future<bool> createEvent() async {
     _auth = FirebaseAuth.instance;
     try {

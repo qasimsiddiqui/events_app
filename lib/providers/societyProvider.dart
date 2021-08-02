@@ -17,7 +17,7 @@ class SocietyProvider with ChangeNotifier {
   String adminUID = "";
   String type = "";
   String department = "";
-  DateTime SocietyCreationTime = DateTime.now();
+  DateTime societyCreationTime = DateTime.now();
 
   SocietyProvider.initialize() {
     _loadSocities();

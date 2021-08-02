@@ -1,6 +1,4 @@
-import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/userProvider.dart';
-import 'package:events_app/widgets/botttomNavBar.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/member_infoCard.dart';
 import 'package:events_app/widgets/societyEventDetails.dart';
@@ -43,10 +41,6 @@ class _SocietyDetailsState extends State<SocietyDetails> {
 
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: BottomNavBar(
-          active: 1,
-        ),
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -61,8 +55,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                         elevation: 3,
                         child: ClipRRect(
                           borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20)),
+                              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                           child: Image(
                             image: AssetImage("images/8.jpg"),
                             fit: BoxFit.cover,
@@ -137,7 +130,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                             : isinfopage
                                 ? 2
                                 : 0,
-                        child: FlatButton(
+                        child: TextButton(
                             autofocus: false,
                             onPressed: () {
                               setState(() {
@@ -158,7 +151,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                             : isinfopage
                                 ? Colors.grey.shade300
                                 : Colors.white,
-                        child: FlatButton(
+                        child: TextButton(
                             onPressed: () {
                               setState(() {
                                 showSocietyEvents = false;
@@ -169,10 +162,8 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                       ),
                       Card(
                         elevation: showSocietyEvents ? 0 : 2,
-                        color: showSocietyEvents
-                            ? Colors.grey.shade300
-                            : Colors.white,
-                        child: FlatButton(
+                        color: showSocietyEvents ? Colors.grey.shade300 : Colors.white,
+                        child: TextButton(
                             onPressed: () {
                               setState(() {
                                 ///isinfopage = false;

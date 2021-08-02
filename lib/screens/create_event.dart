@@ -1,7 +1,6 @@
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/eventProvider.dart';
-import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,7 +38,7 @@ class _CreateEventState extends State<CreateEvent> {
         initialDate: currentDate,
         firstDate: DateTime(2015),
         lastDate: DateTime(2050)) as DateTime;
-    if (pickedDate != null && pickedDate != currentDate)
+    if (pickedDate != currentDate)
       setState(() {
         currentDate = pickedDate;
         eventdate = pickedDate.toString().substring(0, 11);
@@ -47,8 +46,7 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   Future<void> _selectTime(BuildContext context, int startorendtime) async {
-    final TimeOfDay? pickedTime =
-        await showTimePicker(context: context, initialTime: currentTime);
+    final TimeOfDay? pickedTime = await showTimePicker(context: context, initialTime: currentTime);
     if (pickedTime != null)
       setState(() {
         if (startorendtime == 1) {
@@ -64,7 +62,6 @@ class _CreateEventState extends State<CreateEvent> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<EventProvider>(context);
-    final socProvider = Provider.of<SocietyProvider>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -134,10 +131,7 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ],
               ),
-              CustomTextField(
-                text: "Enter Event Name",
-                editingController: authProvider.eventname,
-              ),
+              CustomTextField(text: "Enter Event Name", editingController: authProvider.eventname),
               Row(
                 children: [
                   Padding(
@@ -167,8 +161,7 @@ class _CreateEventState extends State<CreateEvent> {
                     Container(
                         height: height * 0.08,
                         width: width * 0.15,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -298,14 +291,12 @@ class _CreateEventState extends State<CreateEvent> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
-                          onTap: () =>
-                              {print(currentTime), _selectTime(context, 1)},
+                          onTap: () => {print(currentTime), _selectTime(context, 1)},
                           child: TextFormField(
                             enabled: false,
                             //controller: authProvider.password,
                             decoration: InputDecoration(
-                                hintText:
-                                    currentTime.toString().substring(10, 15),
+                                hintText: currentTime.toString().substring(10, 15),
                                 border: InputBorder.none,
                                 icon: Icon(Icons.watch)),
                           ),
@@ -331,8 +322,7 @@ class _CreateEventState extends State<CreateEvent> {
                             enabled: false,
                             //controller: authProvider.password,
                             decoration: InputDecoration(
-                                hintText:
-                                    eventendTime.toString().substring(10, 15),
+                                hintText: eventendTime.toString().substring(10, 15),
                                 border: InputBorder.none,
                                 icon: Icon(Icons.watch)),
                           ),
@@ -378,8 +368,7 @@ class _CreateEventState extends State<CreateEvent> {
                 ],
               ),
               CustomTextField(
-                  text: "Enter Event Address",
-                  editingController: authProvider.eventaddress),
+                  text: "Enter Event Address", editingController: authProvider.eventaddress),
               Row(
                 children: [
                   Padding(padding: EdgeInsets.only(left: width * 0.08)),
@@ -392,8 +381,7 @@ class _CreateEventState extends State<CreateEvent> {
                 ],
               ),
               CustomTextField(
-                  text: "Enter Event Description",
-                  editingController: authProvider.discription),
+                  text: "Enter Event Description", editingController: authProvider.discription),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
                 child: Container(
@@ -407,8 +395,7 @@ class _CreateEventState extends State<CreateEvent> {
                             authProvider.startime = eventStartingTime;
                             authProvider.endtime = eventendingTime;
                             authProvider.isonline = isonlineevent;
-                            authProvider.id =
-                                widget.eventcreator.instagramID + "123";
+                            authProvider.id = widget.eventcreator.instagramID + "123";
                             // if (!await authProvider.CreateEvent()) {
                             if (!await authProvider.createEvent()) {
                               print("Error");
