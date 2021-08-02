@@ -37,7 +37,7 @@ class SocietyProvider with ChangeNotifier {
         "goals": goals.text,
         "type": type,
         "department": department,
-        "creationdate": societyCreationTime,
+        "creationdate": SocietyCreationTime,
         "admin": adminName,
         "adminUid": adminUID,
         "profileimage": "",

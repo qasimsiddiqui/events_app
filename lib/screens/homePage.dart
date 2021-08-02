@@ -1,11 +1,16 @@
-import 'package:events_app/widgets/customtext.dart';
-import 'package:events_app/widgets/eventFeed_widget.dart';
 import 'package:events_app/auth/authentication_service.dart';
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
+import 'package:events_app/screens/create_event.dart';
 import 'package:events_app/screens/create_society.dart';
+import 'package:events_app/screens/eventDetails.dart';
 import 'package:events_app/screens/loginPage.dart';
+import 'package:events_app/widgets/botttomNavBar.dart';
+import 'package:events_app/widgets/customtext.dart';
+import 'package:events_app/widgets/drawer.dart';
+import 'package:events_app/widgets/event_explore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
