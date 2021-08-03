@@ -20,6 +20,7 @@ class EventFeed extends StatefulWidget {
       {required this.event,
       required this.useremail,
       required this.showhostsoc});
+
   @override
   _EventFeedState createState() => _EventFeedState();
 }

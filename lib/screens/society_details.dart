@@ -5,6 +5,7 @@ import 'package:events_app/providers/eventProvider.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/screens/viewsocietyMembers.dart';
+import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventFeed_widget.dart';
 import 'package:events_app/widgets/society_info.dart';

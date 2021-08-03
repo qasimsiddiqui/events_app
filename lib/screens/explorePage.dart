@@ -17,6 +17,7 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
+
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
@@ -25,8 +26,8 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
-
     final eventprovider = Provider.of<EventProvider>(context);
+    double _height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
           child: Column(children: [
@@ -53,6 +54,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 mainAxisSpacing: 8,
                 crossAxisCount: 2,
                 physics: ScrollPhysics(),
+
                 children: eventprovider.events
                     .map((item) => EventExploreWidget(
                           event: item,

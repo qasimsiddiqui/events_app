@@ -8,6 +8,9 @@ import 'package:events_app/screens/loginPage.dart';
 import 'package:events_app/screens/profilePage.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventFeed_widget.dart';
+import 'package:events_app/widgets/drawer.dart';
+import 'package:events_app/widgets/event_explore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,29 +53,20 @@ class _HomePageState extends State<HomePage> {
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      //appBar:
-      // AppBar(
-      //   elevation: 0,
-      //   title: CustomText(
-      //     text: "Events",
-      //     letterspacing: 3,
-      //     fontWeight: FontWeight.bold,
-      //     size: 30,
-      //   ),
-      //   centerTitle: true,
-      // ),
       drawer: Drawer(
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
+              currentAccountPicture: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage, image: userProvider.varifiedUser.profileimage),
               accountEmail: CustomText(
                 text: "Huzaifashakeel778@gmail.com",
                 color: Colors.black,
                 size: 16,
               ),
-              accountName:
-                  CustomText(text: "Huzaifa", color: Colors.black, size: 20),
+              accountName: CustomText(text: "Huzaifa", color: Colors.black, size: 20),
             ),
             ListTile(
               title: Text(
@@ -170,7 +164,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [

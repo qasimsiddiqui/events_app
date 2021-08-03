@@ -1,6 +1,7 @@
 import 'package:events_app/screens/explorePage.dart';
 import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/screens/myprofilePage.dart';
+import 'package:events_app/screens/profilePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -9,13 +10,14 @@ class BottomNavBar extends StatefulWidget {
   final String useremail;
 
   const BottomNavBar({Key? key, required this.useremail}) : super(key: key);
+  
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+
+  PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +85,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           curve: Curves.ease,
           duration: Duration(milliseconds: 300),
         ),
-        navBarStyle:
-            NavBarStyle.style11, // Choose the nav bar style with this property.
+        navBarStyle: NavBarStyle.style11, // Choose the nav bar style with this property.
       ),
     );
   }

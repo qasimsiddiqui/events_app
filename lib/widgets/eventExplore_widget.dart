@@ -1,3 +1,4 @@
+
 import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/models/event.dart';
 import 'package:events_app/providers/societyProvider.dart';

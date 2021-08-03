@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/models/event.dart';
 import 'package:events_app/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventProvider with ChangeNotifier {
@@ -35,6 +36,7 @@ class EventProvider with ChangeNotifier {
       String endtime,
       int partcipants,
       bool isonline) async {
+
     try {
       Map<String, dynamic> values = {
         "hostid": id,
