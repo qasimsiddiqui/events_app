@@ -3,7 +3,6 @@ import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventExplore_widget.dart';
-import 'package:events_app/widgets/event_explore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,10 +25,6 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
-
-    final userprovider = Provider.of<UserProvider>(context);
-    final societyProvider = Provider.of<SocietyProvider>(context);
 
     final eventprovider = Provider.of<EventProvider>(context);
     return Scaffold(

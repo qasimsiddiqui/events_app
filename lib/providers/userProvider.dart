@@ -7,6 +7,8 @@ class UserProvider with ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   List<UserModel> users = [];
+  List<UserModel> eventparticipants = [];
+  List<UserModel> societyMembers = [];
   late UserModel varifiedUser;
   late UserModel eventhost;
   late bool isvar = false;
@@ -104,5 +106,63 @@ class UserProvider with ChangeNotifier {
       print(e.toString());
       return false;
     }
+  }
+
+  //relational functions of User and event
+  Future<bool> ifalreadylikedbyuser(
+      {required String collectionName,
+      required String collectionDocid,
+      required String userid}) async {
+    bool userexist = false;
+    await _firestore
+        .collection(collectionName)
+        .doc(collectionDocid)
+        .collection(usercollection)
+        .doc(userid)
+        .get()
+        .then((result) => {userexist = result.exists});
+    return userexist;
+  }
+
+  deleteMem(
+      {required String collectionName,
+      required String collectionDocid,
+      required String userid}) async {
+    await _firestore
+        .collection(collectionName)
+        .doc(collectionDocid)
+        .collection(usercollection)
+        .doc(userid)
+        .delete();
+  }
+
+  loadEventParticipant({required String eventid}) async {
+    await _firestore
+        .collection("Events")
+        .doc(eventid)
+        .collection(usercollection)
+        .get()
+        .then((result) => {
+              eventparticipants = [],
+              for (DocumentSnapshot<Map<String, dynamic>> participant
+                  in result.docs)
+                {eventparticipants.add(UserModel.fromSnapshot(participant))}
+            });
+  }
+
+//relational functions of user and Society
+
+  loadSocietyMembers({required String societyid}) async {
+    await _firestore
+        .collection("Societies")
+        .doc(societyid)
+        .collection(usercollection)
+        .get()
+        .then((result) => {
+              societyMembers = [],
+              for (DocumentSnapshot<Map<String, dynamic>> participant
+                  in result.docs)
+                {societyMembers.add(UserModel.fromSnapshot(participant))}
+            });
   }
 }

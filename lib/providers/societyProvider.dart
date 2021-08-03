@@ -84,8 +84,9 @@ class SocietyProvider with ChangeNotifier {
       await _firestore
           .collection(societycollection)
           .doc(socid)
-          .collection("User")
-          .add(values);
+          .collection("Users")
+          .doc(user.uid)
+          .set(values);
       return true;
     } catch (e) {
       print(e.toString());

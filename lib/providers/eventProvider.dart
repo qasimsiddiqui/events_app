@@ -80,8 +80,9 @@ class EventProvider with ChangeNotifier {
       _firestore
           .collection("Events")
           .doc(eventid)
-          .collection("User")
-          .add(values);
+          .collection("Users")
+          .doc(user.uid)
+          .set(values);
       //clearControllers();
       return true;
     } catch (e) {

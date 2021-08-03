@@ -19,7 +19,8 @@ class SocietyInfoCard extends StatelessWidget {
 
     final userprovider = Provider.of<UserProvider>(context);
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        await userprovider.loadSocietyMembers(societyid: society.uid);
         changeScreen(context,
             SocietyDetails(society: society, user: userprovider.varifiedUser));
       },

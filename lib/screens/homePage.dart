@@ -11,15 +11,11 @@ import 'package:events_app/widgets/eventFeed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   final String useremail;
-  //for testing purpose only
   bool isfeed = false;
 
   HomePage({Key? key, required this.useremail}) : super(key: key);
-
-  //const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -194,6 +190,7 @@ class _HomePageState extends State<HomePage> {
                     .map((e) => GestureDetector(
                           onTap: () {},
                           child: EventFeed(
+                            showhostsoc: true,
                             event: e,
                             useremail: widget.useremail,
                           ),

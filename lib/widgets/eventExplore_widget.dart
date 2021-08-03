@@ -41,15 +41,16 @@ class EventExploreWidget extends StatelessWidget {
                     if (userprovider.isvar) {
                       await userprovider.getVarifiedUser(email: useremail);
                     }
-                    print("going in event");
+
                     changeScreen(
                         context,
                         EventDetails(
-                            event: event,
-                            eventhost: userprovider.eventhost,
-                            user: userprovider.varifiedUser,
-                            eventhostSociety:
-                                societyProvider.eventhostsociety));
+                          event: event,
+                          eventhost: userprovider.eventhost,
+                          user: userprovider.varifiedUser,
+                          eventhostSociety: societyProvider.eventhostsociety,
+                          showhostsoc: true,
+                        ));
                   },
                   child: Container(
                       height: _height * 0.2,

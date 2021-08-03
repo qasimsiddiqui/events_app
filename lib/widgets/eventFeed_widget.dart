@@ -12,10 +12,14 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class EventFeed extends StatefulWidget {
+  final bool showhostsoc;
   final EventModel event;
   final String useremail;
 
-  EventFeed({required this.event, required this.useremail});
+  EventFeed(
+      {required this.event,
+      required this.useremail,
+      required this.showhostsoc});
   @override
   _EventFeedState createState() => _EventFeedState();
 }
@@ -61,13 +65,9 @@ class _EventFeedState extends State<EventFeed> {
                         child: FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
                           image: widget.event.image,
-                          // height: 200,
                           fit: BoxFit.fill,
-                          // width: double.infinity,
                           height: _height * 0.35,
                           width: _width * 0.95,
-                          //height: height * 0.35,
-                          // width: width * 0.93,
                         ),
                       ),
                     ],
@@ -75,24 +75,35 @@ class _EventFeedState extends State<EventFeed> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    print(widget.event.hostuid);
-                    await userprovider.getuserbyid(id: widget.event.hostid);
+                    if (!userprovider.isvar) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                            'You Must complete your information to view Event Details'),
+                      ));
+                    } else {
+                      await userprovider.getuserbyid(id: widget.event.hostid);
 
-                    await societyProvider.getSocietybyid(
-                        id: widget.event.hostsocietyid);
-                    if (userprovider.isvar) {
+                      //to load event participants
+
+                      await userprovider.loadEventParticipant(
+                          eventid: widget.event.uid);
+                      //to load host Society
+                      await societyProvider.getSocietybyid(
+                          id: widget.event.hostsocietyid);
+                      //to get current user
                       await userprovider.getVarifiedUser(
                           email: widget.useremail);
-                    }
-                    print("going in event");
-                    changeScreen(
-                        context,
-                        EventDetails(
+
+                      changeScreen(
+                          context,
+                          EventDetails(
                             event: widget.event,
                             eventhost: userprovider.eventhost,
                             user: userprovider.varifiedUser,
-                            eventhostSociety:
-                                societyProvider.eventhostsociety));
+                            eventhostSociety: societyProvider.eventhostsociety,
+                            showhostsoc: widget.showhostsoc,
+                          ));
+                    }
                   },
                   child: ClipRect(
                     child: BackdropFilter(
