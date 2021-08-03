@@ -19,6 +19,7 @@ class SocietyModel {
   static const GOALS = "goals";
   static const TYPE = "type";
 
+  String _uid = "";
   String _id = "";
   String _name = "";
   String _description = "";
@@ -37,7 +38,7 @@ class SocietyModel {
   //String _likedsocieties;
 
 //  getters
-  String get id => _id;
+  String get uid => _uid;
   String get name => _name;
   String get description => _description;
   String get university => _university;
@@ -54,7 +55,7 @@ class SocietyModel {
   List<UserModel> get members => _members;
 
   SocietyModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    _id = snapshot.data()![ID];
+    _uid = snapshot.id;
     _name = snapshot.data()![NAME];
     _description = snapshot.data()![DESCRIPTION];
     _university = snapshot.data()![UNIVERSITY];

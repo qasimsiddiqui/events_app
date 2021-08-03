@@ -17,15 +17,25 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  final formkey = GlobalKey<FormState>();
+  TextEditingController eventname = TextEditingController();
+  TextEditingController eventaddress = TextEditingController();
+  TextEditingController discription = TextEditingController();
+  String id = "";
+  String eventdate = "";
+  String image = "";
+  String heldby = "";
+  String startime = "";
+  String endtime = "";
+  String hostid = "";
+  int participants = 0;
+  int intrestcount = 0;
+  bool isonline = false;
   DateTime currentDate = DateTime.now();
   TimeOfDay currentTime = TimeOfDay.now();
   TimeOfDay eventendTime = TimeOfDay.now();
-  String eventdate = "";
   String eventStartingTime = "";
   String eventendingTime = "";
-  int participants = 10;
-  //bool tapped = false;
-  bool isonlineevent = false;
 
   @override
   void setState(VoidCallback fn) {
@@ -59,6 +69,12 @@ class _CreateEventState extends State<CreateEvent> {
       });
   }
 
+  void clearControllers() {
+    eventname.text = "";
+    eventaddress.text = "";
+    eventdate = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<EventProvider>(context);
@@ -70,7 +86,7 @@ class _CreateEventState extends State<CreateEvent> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Form(
-          key: authProvider.formkey,
+          key: formkey,
           child: Column(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -131,7 +147,10 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ],
               ),
-              CustomTextField(text: "Enter Event Name", editingController: authProvider.eventname),
+              CustomTextField(
+                text: "Enter Event Name",
+                editingController: eventname,
+              ),
               Row(
                 children: [
                   Padding(
@@ -191,7 +210,7 @@ class _CreateEventState extends State<CreateEvent> {
                           setState(() {
                             // authProvider
                             participants++;
-                            authProvider.participants = participants;
+                            participants = participants;
                           });
                         },
                       ),
@@ -207,7 +226,7 @@ class _CreateEventState extends State<CreateEvent> {
                           setState(() {
                             if (participants > 5) {
                               participants--;
-                              authProvider.participants = participants;
+                              participants = participants;
                             }
                             ;
                           });
@@ -346,11 +365,11 @@ class _CreateEventState extends State<CreateEvent> {
                     Padding(padding: EdgeInsets.only(left: width * 0.48)),
                     CupertinoSwitch(
                         activeColor: Colors.blue,
-                        value: isonlineevent,
+                        value: isonline,
                         onChanged: (bool value) {
                           setState(() {
-                            isonlineevent = value;
-                            print(isonlineevent);
+                            isonline = value;
+                            print(isonline);
                           });
                         })
                   ],
@@ -368,7 +387,8 @@ class _CreateEventState extends State<CreateEvent> {
                 ],
               ),
               CustomTextField(
-                  text: "Enter Event Address", editingController: authProvider.eventaddress),
+                  text: "Enter Event Address", editingController: eventaddress),
+
               Row(
                 children: [
                   Padding(padding: EdgeInsets.only(left: width * 0.08)),
@@ -381,7 +401,9 @@ class _CreateEventState extends State<CreateEvent> {
                 ],
               ),
               CustomTextField(
-                  text: "Enter Event Description", editingController: authProvider.discription),
+                  text: "Enter Event Description",
+                  editingController: discription),
+
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
                 child: Container(
@@ -389,19 +411,27 @@ class _CreateEventState extends State<CreateEvent> {
                     width: width * 0.5,
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (authProvider.formkey.currentState!.validate()) {
-                            authProvider.participants = participants;
-                            authProvider.eventdate = eventdate;
-                            authProvider.startime = eventStartingTime;
-                            authProvider.endtime = eventendingTime;
-                            authProvider.isonline = isonlineevent;
-                            authProvider.id = widget.eventcreator.instagramID + "123";
+                          if (formkey.currentState!.validate()) {
+
                             // if (!await authProvider.CreateEvent()) {
-                            if (!await authProvider.createEvent()) {
+                            if (!await authProvider.createEvent(
+                                widget.eventcreator.uid,
+                                eventname.text,
+                                discription.text,
+                                eventaddress.text,
+                                eventdate,
+                                "",
+                                widget.eventcreator.name,
+                                "Host Society",
+                                eventStartingTime,
+                                eventendingTime,
+                                participants,
+                                isonline)) {
                               print("Error");
                             } else {
                               print("added");
-                              isonlineevent = false;
+                              clearControllers();
+                              isonline = false;
                             }
                           }
                         },

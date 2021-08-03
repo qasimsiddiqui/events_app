@@ -1,10 +1,13 @@
 import 'package:events_app/providers/eventProvider.dart';
+import 'package:events_app/widgets/customtext.dart';
+import 'package:events_app/widgets/eventFeed_widget.dart';
 import 'package:events_app/widgets/eventSummaryCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SocietyEventDetails extends StatefulWidget {
-  const SocietyEventDetails({Key? key}) : super(key: key);
+  final String email;
+  const SocietyEventDetails({Key? key, required this.email}) : super(key: key);
 
   @override
   _SocietyEventDetailsState createState() => _SocietyEventDetailsState();
@@ -104,8 +107,10 @@ class _SocietyEventDetailsState extends State<SocietyEventDetails> {
           children: eventProvider.events
               .map((item) => GestureDetector(
                     onTap: () {},
-                    child: EventSummaryCard(
+                    child: EventFeed(
                       event: item,
+                      useremail: widget.email,
+                      showhostsoc: false,
                     ),
                   ))
               .toList(),

@@ -1,16 +1,22 @@
 import 'package:events_app/screens/explorePage.dart';
 import 'package:events_app/screens/homePage.dart';
+import 'package:events_app/screens/myprofilePage.dart';
 import 'package:events_app/screens/profilePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BottomNavBar extends StatefulWidget {
+  final String useremail;
+
+  const BottomNavBar({Key? key, required this.useremail}) : super(key: key);
+  
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+
   PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
   @override
@@ -19,7 +25,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
       child: PersistentTabView(
         context,
         controller: _controller,
-        screens: [HomePage(), ExplorePage(), Container(), Container(), ProfilePage()],
+        screens: [
+          HomePage(useremail: widget.useremail),
+          ExplorePage(useremail: widget.useremail),
+          Container(),
+          Container(),
+          MyProfile(),
+        ],
         items: [
           PersistentBottomNavBarItem(
             icon: Icon(CupertinoIcons.home),

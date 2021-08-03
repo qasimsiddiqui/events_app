@@ -10,6 +10,7 @@ class EventModel {
   static const IMAGE = "image";
   static const HELDBY = "heldby";
   static const HOSTUID = "hostuid";
+  static const check = "hostid";
   static const HELDBYSOCIETY = "heldbySociety";
   static const INTRESTS = "Intrest_count";
   static const STARTIME = "startime";
@@ -18,9 +19,12 @@ class EventModel {
   static const LIKEDBY = "likedby";
   static const ISONLINE = "isonline";
 
+  static const HOSTSOCIETYID = "hostsocietyid";
+
   static const INTRESTEDMEMBERS = "intrestedmembers";
 
   String _id = "";
+  String _uid = "";
   String _name = "";
   String _description = "";
   String _location = "";
@@ -31,14 +35,15 @@ class EventModel {
   String _startime = "";
   String _endtime = "";
   String _hostuid = "";
+  String _hostid = "";
+  String _hostsocietyid = "";
   int _participants = 0;
   int _intrestcount = 0;
   bool _isonline = false;
-  List<UserModel> _intrestedmembers = [];
-  List<UserModel> _likedby = [];
 
 //  getters
   String get id => _id;
+  String get uid => _uid;
   String get name => _name;
   String get description => _description;
   String get location => _location;
@@ -49,14 +54,14 @@ class EventModel {
   String get startime => _startime;
   String get endtime => _endtime;
   String get hostuid => _hostuid;
+  String get hostid => _hostid;
+  String get hostsocietyid => _hostsocietyid;
   bool get isonline => _isonline;
-  List<UserModel> get likedby => _likedby;
-  List<UserModel> get intrestedmembers => _intrestedmembers;
   int get intrestcount => _intrestcount;
   int get participants => _participants;
 
   EventModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    _id = snapshot.data()![ID];
+    _uid = snapshot.id;
     _description = snapshot.data()![DESCRIPTION];
     _name = snapshot.data()![NAME];
     _location = snapshot.data()![LOCATION];
@@ -69,7 +74,9 @@ class EventModel {
     _image = snapshot.data()![IMAGE];
     _isonline = snapshot.data()![ISONLINE];
     _hostuid = snapshot.data()![HOSTUID];
+    _hostid = snapshot.data()![check];
     //_likedby = snapshot.data()![LIKEDBY];
+    _hostsocietyid = snapshot.data()![HOSTSOCIETYID];
     _participants = snapshot.data()![TOTALPARTICIPANTS];
     //_intrestcount = snapshot.data()![INTRESTS];
     // _intrestedmembers = snapshot.data()![INTRESTEDMEMBERS];

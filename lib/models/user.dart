@@ -17,6 +17,7 @@ class UserModel {
   static const LIKEDSOCIETIES = "likedsocieties";
 
   String _id = "";
+  String _uid = "";
   String _name = "";
   String _address = "";
   String _instagramID = "";
@@ -30,22 +31,10 @@ class UserModel {
   String _email = "";
   List<SocietyModel> _likedsocieties = [];
   //String _likedsocieties;
-  UserModel() {
-    _id = "";
-    _name = "";
-    _address = "";
-    _instagramID = "";
-    _profileimage = "";
-    _coverimage = "";
-    _university = "";
-    _dateofbirth = "";
-    _bio = "";
-    _phonenumber = "";
-    _department = "";
-    _email = "";
-  }
+
 //  getters
   String get id => _id;
+  String get uid => _uid;
   String get name => _name;
   String get address => _address;
   String get instagramID => _instagramID;
@@ -60,6 +49,7 @@ class UserModel {
   List<SocietyModel> get likedsocieties => _likedsocieties;
 
   UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    _uid = snapshot.id;
     _id = snapshot.data()![ID];
     _name = snapshot.data()![NAME];
     _address = snapshot.data()![ADDRESS];
@@ -71,9 +61,6 @@ class UserModel {
     _bio = snapshot.data()![BIO];
     _phonenumber = snapshot.data()![PHONENUMBER];
     _department = snapshot.data()![DEPARTMENT];
-
     _email = snapshot.data()![EMAIL];
-    print("all values assigned\nall values assigned\nall values assigned");
-    //_likedsocieties = snapshot.data()![LIKEDSOCIETIES];
   }
 }

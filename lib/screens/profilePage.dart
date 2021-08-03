@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:events_app/helpers/screen_nav.dart';
 import 'package:events_app/providers/userProvider.dart';
+import 'package:events_app/screens/homePage.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,14 +11,37 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
-  final User user;
+  final String useremail;
 
-  const ProfilePage({Key? key, required this.user}) : super(key: key);
+  const ProfilePage({Key? key, required this.useremail}) : super(key: key);
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  TextEditingController userName = TextEditingController();
+  TextEditingController userBio = TextEditingController();
+  TextEditingController userCity = TextEditingController();
+  TextEditingController userUniversity = TextEditingController();
+  TextEditingController userDepartment = TextEditingController();
+  TextEditingController userPhNo = TextEditingController();
+  TextEditingController userInsta = TextEditingController();
+  String userDOB = "";
+  String userEmail = "";
+  String userid = "";
+  final formkey = GlobalKey<FormState>();
+
+  void clearControllers() {
+    userBio.text = "";
+    userCity.text = "";
+    userDOB = "";
+    userDepartment.text = "";
+    userInsta.text = "";
+    userName.text = "";
+    userPhNo.text = "";
+    userUniversity.text = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -26,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
-          key: userProvider.formkey,
+          key: formkey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -155,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text('Name', style: Theme.of(context).textTheme.bodyText1),
               ),
               CustomTextField(
-                editingController: userProvider.userName,
+                editingController: userName,
                 text: "Your Name",
               ),
               Padding(
@@ -164,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text('Bio', style: Theme.of(context).textTheme.bodyText1),
               ),
               CustomTextField(
-                editingController: userProvider.userBio,
+                editingController: userBio,
                 maxLines: 10,
                 text: "Add an Existing Bio",
               ),
@@ -174,7 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text('City', style: Theme.of(context).textTheme.bodyText1),
               ),
               CustomTextField(
-                editingController: userProvider.userCity,
+                editingController: userCity,
                 text: "Enter Your City",
               ),
               Padding(
@@ -183,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: Theme.of(context).textTheme.bodyText1),
               ),
               CustomTextField(
-                editingController: userProvider.userUniversity,
+                editingController: userUniversity,
                 text: "Select Your University",
               ),
               Padding(
@@ -192,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: Theme.of(context).textTheme.bodyText1),
               ),
               CustomTextField(
-                editingController: userProvider.userDepartment,
+                editingController: userDepartment,
                 text: "Select Your Department",
               ),
               Padding(
@@ -201,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: Theme.of(context).textTheme.bodyText1),
               ),
               CustomTextField(
-                editingController: userProvider.userPhNo,
+                editingController: userPhNo,
                 text: "Enter Your Phone Number",
               ),
               Padding(
@@ -210,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: Theme.of(context).textTheme.bodyText1),
               ),
               CustomTextField(
-                editingController: userProvider.userPhNo,
+                editingController: userInsta,
                 text: "Enter Your Instagram Username",
               ),
               SizedBox(
@@ -224,19 +249,32 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: ElevatedButton(
                           onPressed: () async {
-                            if (userProvider.formkey.currentState!.validate()) {
-                              userProvider.userEmail =
-                                  widget.user.email.toString();
-                              if (!await userProvider.createUser()) {
+                            if (formkey.currentState!.validate()) {
+                              if (!await userProvider.createUser(
+                                  userName.text,
+                                  userCity.text,
+                                  userInsta.text,
+                                  userUniversity.text,
+                                  userDepartment.text,
+                                  "10-12-1990",
+                                  userBio.text,
+                                  userPhNo.text,
+                                  widget.useremail.toString(),
+                                  "",
+                                  "",
+                                  userInsta.text + "123")) {
                                 print("error in adding User");
                               } else {
-                                userProvider.clearControllers();
+                                clearControllers();
+                                userProvider.isvar = true;
+                                changeScreenReplacement(context,
+                                    HomePage(useremail: widget.useremail));
                                 print("User Added");
                               }
                             }
                           },
                           child: CustomText(
-                            text: "Create",
+                            text: "Varify",
                             fontWeight: FontWeight.bold,
                             size: 24,
                             color: Colors.white,

@@ -1,25 +1,22 @@
+import 'package:events_app/providers/eventProvider.dart';
+import 'package:events_app/providers/societyProvider.dart';
+import 'package:events_app/providers/userProvider.dart';
 import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/eventExplore_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExplorePage extends StatefulWidget {
+  final String useremail;
+
+  const ExplorePage({Key? key, required this.useremail}) : super(key: key);
+
   @override
   _ExplorePageState createState() => _ExplorePageState();
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  List<String> mylist = [
-    "images/1.jpg",
-    "images/2.jpg",
-    "images/3.jpg",
-    "images/4.jpg",
-    "images/5.jpg",
-    "images/6.jpg",
-    "images/7.jpg",
-    "images/8.jpg",
-    "images/9.jpg"
-  ];
 
   @override
   void setState(VoidCallback fn) {
@@ -29,6 +26,7 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
+    final eventprovider = Provider.of<EventProvider>(context);
     double _height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
@@ -56,7 +54,13 @@ class _ExplorePageState extends State<ExplorePage> {
                 mainAxisSpacing: 8,
                 crossAxisCount: 2,
                 physics: ScrollPhysics(),
-                children: mylist.map((item) => EventExploreWidget(image: item)).toList()),
+
+                children: eventprovider.events
+                    .map((item) => EventExploreWidget(
+                          event: item,
+                          useremail: widget.useremail,
+                        ))
+                    .toList()),
           ),
         ),
       ])),

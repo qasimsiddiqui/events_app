@@ -1,21 +1,14 @@
-import 'package:events_app/database/userServices.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserProvider with ChangeNotifier {
-  TextEditingController userName = TextEditingController();
-  TextEditingController userBio = TextEditingController();
-  TextEditingController userCity = TextEditingController();
-  TextEditingController userUniversity = TextEditingController();
-  TextEditingController userDepartment = TextEditingController();
-  TextEditingController userPhNo = TextEditingController();
-  TextEditingController userInsta = TextEditingController();
-  String userDOB = "";
-  String userEmail = "";
-  final formkey = GlobalKey<FormState>();
-  UserServices _userservices = UserServices();
+  String usercollection = "Users";
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   List<UserModel> users = [];
+  List<UserModel> eventparticipants = [];
+  List<UserModel> societyMembers = [];
   late UserModel varifiedUser;
   late UserModel eventhost;
   late bool isvar = false;
@@ -25,42 +18,89 @@ class UserProvider with ChangeNotifier {
   }
 
   _loadusers() async {
-    users = await _userservices.loadAllusers();
+    await _firestore.collection(usercollection).get().then((result) {
+      for (DocumentSnapshot<Map<String, dynamic>> user in result.docs) {
+        users.add(UserModel.fromSnapshot(user));
+      }
+    });
     notifyListeners();
   }
 
-  // ignore: unused_element
-  Future getVarifiedUser({required String email}) async {
-    varifiedUser = await _userservices.getuserByEmail(email: email);
+  getVarifiedUser({required String email}) async {
+    await _firestore
+        .collection(usercollection)
+        .where("email", isEqualTo: email)
+        .get()
+        .then((reult) {
+      varifiedUser = UserModel.fromSnapshot(reult.docs.single);
+    });
   }
 
-  Future isuservarified({required String email}) async {
-    isvar = await _userservices.ifUserVarified(email: email);
+  isuservarified({required String email}) async {
+    try {
+      await _firestore
+          .collection(usercollection)
+          .where("email", isEqualTo: email)
+          .get()
+          .then((reult) {
+        if (reult.docs.first.data().isEmpty)
+          isvar = false;
+        else
+          isvar = true;
+      });
+    } catch (e) {
+      print(e);
+      isvar = false;
+    }
   }
 
-  Future getuserbyuid({required String uid}) async {
-    print(
-        "printing eventhost object\nprinting eventhost object\nprinting eventhost object\nprinting eventhost object");
-
-    eventhost = await _userservices.getUserByUID(uid: uid);
+  Future getuserbyid({required String id}) async {
+    await _firestore
+        .collection(usercollection)
+        .where("id", isEqualTo: id)
+        .get()
+        .then((doc) {
+      eventhost = UserModel.fromSnapshot(doc.docs.first);
+    });
   }
 
-  Future<bool> createUser() async {
+  getUserByID({required String id}) async =>
+      await _firestore.collection(usercollection).doc(id).get().then((doc) {
+        print("printing docomentdata\n\n");
+        print(doc.data());
+        eventhost = UserModel.fromSnapshot(doc);
+      });
+
+  Future<bool> createUser(
+      String username,
+      String usercity,
+      String userInsta,
+      String useruni,
+      String userdepartment,
+      String userDOB,
+      String userbio,
+      String phno,
+      String email,
+      String profileimage,
+      String coverimage,
+      String userid) async {
     try {
       Map<String, dynamic> values = {
-        "name": userName.text,
-        "address": userCity.text,
-        "instagramID": userInsta.text,
-        "university": userUniversity.text,
-        "department": userDepartment.text,
+        "name": username,
+        "address": usercity,
+        "instagramID": userInsta,
+        "university": useruni,
+        "department": userdepartment,
         "dateofbirth": "10-12-1998",
-        "bio": userBio.text,
-        "phonenumber": userPhNo.text,
-        "email": userEmail,
+        "bio": userbio,
+        "phonenumber": phno,
+        "email": email,
         "profileimage": "",
-        "coverimage": ""
+        "coverimage": "",
+        "id": userid,
       };
-      _userservices.addUser(values);
+
+      _firestore.collection(usercollection).doc().set(values);
       return true;
     } catch (e) {
       print(e.toString());
@@ -68,14 +108,61 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  void clearControllers() {
-    userBio.text = "";
-    userCity.text = "";
-    userDOB = "";
-    userDepartment.text = "";
-    userInsta.text = "";
-    userName.text = "";
-    userPhNo.text = "";
-    userUniversity.text = "";
+  //relational functions of User and event
+  Future<bool> ifalreadylikedbyuser(
+      {required String collectionName,
+      required String collectionDocid,
+      required String userid}) async {
+    bool userexist = false;
+    await _firestore
+        .collection(collectionName)
+        .doc(collectionDocid)
+        .collection(usercollection)
+        .doc(userid)
+        .get()
+        .then((result) => {userexist = result.exists});
+    return userexist;
+  }
+
+  deleteMem(
+      {required String collectionName,
+      required String collectionDocid,
+      required String userid}) async {
+    await _firestore
+        .collection(collectionName)
+        .doc(collectionDocid)
+        .collection(usercollection)
+        .doc(userid)
+        .delete();
+  }
+
+  loadEventParticipant({required String eventid}) async {
+    await _firestore
+        .collection("Events")
+        .doc(eventid)
+        .collection(usercollection)
+        .get()
+        .then((result) => {
+              eventparticipants = [],
+              for (DocumentSnapshot<Map<String, dynamic>> participant
+                  in result.docs)
+                {eventparticipants.add(UserModel.fromSnapshot(participant))}
+            });
+  }
+
+//relational functions of user and Society
+
+  loadSocietyMembers({required String societyid}) async {
+    await _firestore
+        .collection("Societies")
+        .doc(societyid)
+        .collection(usercollection)
+        .get()
+        .then((result) => {
+              societyMembers = [],
+              for (DocumentSnapshot<Map<String, dynamic>> participant
+                  in result.docs)
+                {societyMembers.add(UserModel.fromSnapshot(participant))}
+            });
   }
 }

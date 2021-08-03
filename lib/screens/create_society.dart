@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:events_app/models/user.dart';
 import 'package:events_app/providers/societyProvider.dart';
 import 'package:events_app/screens/loading.dart';
@@ -5,22 +7,56 @@ import 'package:events_app/widgets/customtext.dart';
 import 'package:events_app/widgets/customtextformfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class CreateSociety extends StatefulWidget {
-  final User user;
+  // final User user;
   final UserModel userModel;
 
-  const CreateSociety({Key? key, required this.user, required this.userModel})
-      : super(key: key);
+  const CreateSociety({Key? key, required this.userModel}) : super(key: key);
 
   @override
   _CreateSocietyState createState() => _CreateSocietyState();
 }
 
-class _CreateSocietyState extends State<CreateSociety> {
+class _CreateSocietyState extends State<CreateSociety>
+    with TickerProviderStateMixin {
   String societytype = "  Common";
   String department = "  Electrical";
+
+  final formkey = GlobalKey<FormState>();
+  TextEditingController societyname = TextEditingController();
+  TextEditingController societyuniversity = TextEditingController();
+  TextEditingController goals = TextEditingController();
+  TextEditingController societydescription = TextEditingController();
+  String adminName = "";
+  String adminUID = "";
+  String type = "";
+  clearControllers() {
+    societyname.text = "";
+    societydescription.text = "";
+    societyuniversity.text = "";
+    goals.text = "";
+  }
+
+  // late File _image;
+  // late ImagePicker imagePicker;
+  // getImage(bool isCamera) async {
+  //   File image;
+
+  //   if (isCamera) {
+  //     image = (await imagePicker.pickImage(source: ImageSource.camera)) as File;
+  //   } else {
+  //     image =
+  //         (await imagePicker.pickImage(source: ImageSource.gallery)) as File;
+  //   }
+
+  //   setState(() {
+  //     _image = image;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -34,7 +70,7 @@ class _CreateSocietyState extends State<CreateSociety> {
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Form(
-              key: societyProvider.formkey,
+              key: formkey,
               child: Column(
                 children: [
                   Stack(
@@ -58,7 +94,9 @@ class _CreateSocietyState extends State<CreateSociety> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(140, 150, 0, 0),
                         child: CircleAvatar(
-                          backgroundImage: AssetImage("images/7.jpg"),
+                          // child: Image.file(
+                          //   _image,
+                          // ),
                           radius: 50,
                         ),
                       ),
@@ -75,7 +113,7 @@ class _CreateSocietyState extends State<CreateSociety> {
                   ),
                   CustomTextField(
                       text: "Enter Society Name",
-                      editingController: societyProvider.societyname),
+                      editingController: societyname),
                   Row(
                     children: [
                       CustomText(
@@ -87,7 +125,7 @@ class _CreateSocietyState extends State<CreateSociety> {
                   ),
                   CustomTextField(
                       text: "Enter Society Description",
-                      editingController: societyProvider.societydescription),
+                      editingController: societydescription),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Row(
@@ -138,7 +176,7 @@ class _CreateSocietyState extends State<CreateSociety> {
                   ),
                   CustomTextField(
                       text: "Select Your UNiversity",
-                      editingController: societyProvider.societyuniversity),
+                      editingController: societyuniversity),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Row(
@@ -189,7 +227,7 @@ class _CreateSocietyState extends State<CreateSociety> {
                   ),
                   CustomTextField(
                     text: "Enter Your Goals",
-                    editingController: societyProvider.goals,
+                    editingController: goals,
                     textype: TextInputType.multiline,
                     height: 150,
                     maxLines: 5,
@@ -201,17 +239,22 @@ class _CreateSocietyState extends State<CreateSociety> {
                         width: width * 0.5,
                         child: ElevatedButton(
                             onPressed: () async {
-                              if (societyProvider.formkey.currentState!
-                                  .validate()) {
-                                societyProvider.department = department;
-                                societyProvider.type = societytype;
-                                societyProvider.adminUID = widget.user.uid;
-                                societyProvider.adminName =
-                                    widget.userModel.name;
-                                if (!await societyProvider.createSociety()) {
+                              if (formkey.currentState!.validate()) {
+                                if (!await societyProvider.createSociety(
+                                    societyname.text,
+                                    societydescription.text,
+                                    societyuniversity.text,
+                                    goals.text,
+                                    societytype,
+                                    department,
+                                    DateTime.now().toString(),
+                                    widget.userModel.name,
+                                    widget.userModel.uid,
+                                    "",
+                                    "")) {
                                   print("error in adding society");
                                 } else {
-                                  societyProvider.clearControllers();
+                                  clearControllers();
                                   Loading();
                                   print("Society Added");
                                 }
